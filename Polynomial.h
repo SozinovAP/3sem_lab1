@@ -10,14 +10,14 @@ private:
 	string name;
 
 public:
-	Polynom();
-	Polynom(const TList<Monom> &mon, string n);
-	Polynom(Polynom& p);
+	Polynomial();
+	Polynomial(const TList<Monom> &mon, string n);
+	Polynomial(Polynomial& p);
 
-	Polynom& operator-(Polynom& p);
-	Polynom& operator+(Polynom& p);
-	Polynom& operator+=(const Monom &m);
-	Polynom& operator=(Polynom & p);
+	Polynomial& operator-(Polynomial& p);
+	Polynomial& operator+(Polynomial& p);
+	Polynomial& operator+=(const Monom &m);
+	Polynomial& operator=(Polynomial & p);
 
 	friend std::ostream & operator<<(std::ostream & stream, const Polynom &p);
 	friend std::istream & operator>>(std::istream & stream, Polynom & p);

@@ -9,7 +9,8 @@ Polynom::Polynom()
 	name = "";
 }
 
-Polynom::Polynom(const TList<Monom> &mon, string n)
+
+Polynomial::Polynomial(const TList<Monom> &mon, string n)
 {
 	monoms = mon;
 	name = n;
@@ -71,7 +72,7 @@ int Polynom::Det(int x, int y, int z)
 	return sum;
 }
 
-Polynom& Polynom::operator+=(const Monom &m)
+Polynomial& Polynomial::operator+=(const Monom &m)
 {
 	for (int i = 0; i < monoms.GetLength(); i++)
 	{
