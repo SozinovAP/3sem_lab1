@@ -6,16 +6,17 @@ using namespace std;
 class Polynomial
 {
 private:
-	TList<Monomial> monoms;
+	TList<Monom> monoms;
 	string name;
 
 public:
 	Polynomial();
-	Polynomial(const TList<Monomial> &mon, string n);
+	Polynomial(const TList<Monom> &mon, string n);
 	Polynomial(Polynomial& p);
 
 	Polynomial& operator-(Polynomial& p);
 	Polynomial& operator+(Polynomial& p);
+	Polynomial& operator+=(const Monom &m);
 	Polynomial& operator=(Polynomial & p);
 
 	friend std::ostream & operator<<(std::ostream & stream, const Polynomial &p);
@@ -27,7 +28,6 @@ public:
 	bool IsEmpty();
 	void Sort();
 	int Det(int x, int y, int z);
-	void AddMonom(const Monomial &m);
 	void SetName(string n);
 	string GetName();
 	Polynomial Dif(char v);

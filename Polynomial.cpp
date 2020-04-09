@@ -9,7 +9,7 @@ Polynomial::Polynomial()
 	name = "";
 }
 
-Polynomial::Polynomial(const TList<Monomial> &mon, string n)
+Polynomial::Polynomial(const TList<Monom> &mon, string n)
 {
 	monoms = mon;
 	name = n;
@@ -17,7 +17,7 @@ Polynomial::Polynomial(const TList<Monomial> &mon, string n)
 
 Polynomial::Polynomial(Polynomial & p)
 {
-	monoms = TList<Monomial>(p.monoms);
+	monoms = TList<Monom>(p.monoms);
 	name = p.name;
 }
 
@@ -28,7 +28,7 @@ Polynomial& Polynomial::operator-(Polynomial& p)
 		(*res).monoms[i].SetCoef(-(*res).monoms[i].GetCoef());
 	for (int i = 0; i < monoms.GetLength(); i++)
 	{
-		(*res).AddMonom(monoms[i]);
+		(*res) += monoms[i];
 	}
 	return *res;
 }
@@ -39,14 +39,14 @@ Polynomial& Polynomial::operator+(Polynomial & p)
 
 	for (int i = 0; i < monoms.GetLength(); i++)
 	{
-		(*res).AddMonom(monoms[i]);
+		(*res) += monoms[i];
 	}
 	return *res;
 }
 
 Polynomial& Polynomial::operator=(Polynomial & p)
 {
-	monoms = TList<Monomial>(p.monoms);
+	monoms = TList<Monom>(p.monoms);
 
 	return *this;
 }
@@ -71,7 +71,7 @@ int Polynomial::Det(int x, int y, int z)
 	return sum;
 }
 
-void Polynomial::AddMonom(const Monomial &m)
+Polynomial& Polynomial::operator+=(const Monom &m)
 {
 	for (int i = 0; i < monoms.GetLength(); i++)
 	{
@@ -139,7 +139,7 @@ istream & operator>>(istream & stream, Polynomial & p)
 			if (str[i] == '-' || str[i] == '+')
 			{
 				if (m.length() > 1 || (m[i] != '-' && m[i] != '+'))
-					p.AddMonom(Monomial(m));
+					p += Monom(m);
 				m = str[i];
 			}
 			else
@@ -150,7 +150,7 @@ istream & operator>>(istream & stream, Polynomial & p)
 	}
 
 	if (m.length() > 0) 
-		p.AddMonom(Monomial(m));
+		p += Monom(m);
 
 	return stream;
 }
