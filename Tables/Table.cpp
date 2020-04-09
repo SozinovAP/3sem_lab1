@@ -20,7 +20,28 @@ int Table::GetCount() const			//получить количетсво записей
 Polynomial* Table::Find(string name)
 {
 	Record* result = FindRecord(name);
-	return (result == nullptr ? nullptr : &(result->polynomial));
+	return ((result == nullptr || result->removed) ? nullptr : &(result->polynomial));
+}
+
+void Table::Remove(std::string name)
+{
+	Record* result = FindRecord(name);
+	if (result == nullptr || result->removed)
+	{
+		throw "Item for remove not found";
+	}
+	result->removed = true;
+}
+
+void Table::Replace(std::string name, Polynomial& polynomial)
+{
+	Record* result = FindRecord(name);
+	if (result == nullptr || result->removed)
+	{
+		throw "Item for replace not found";
+	}
+
+	result->polynomial = polynomial;
 }
 
 
