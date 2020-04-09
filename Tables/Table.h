@@ -15,13 +15,15 @@ protected:
 	{
 		std::string name;
 		Polynomial polynomial;
-		bool removed;
 
+		Record()
+		{
+			
+		}
 		Record(std::string name, Polynomial polynomial)
 		{
 			this->name = name;
 			this->polynomial = polynomial;
-			this->removed = false;
 		}
 	};
 
@@ -34,8 +36,8 @@ public:
 	int GetCount() const;						//получить количетсво записей
 
 	Polynomial* Find(std::string name);			//поиск записи, nullptr если не найдена
-	virtual void Insert(std::string name, const Polynomial& polynomial) = 0;		//вставка записи
-	void Remove(std::string name);		//удаление записи
+	virtual void Insert(std::string name, Polynomial& polynomial) = 0;		//вставка записи
+	virtual void Remove(std::string name) = 0;		//удаление записи
 	void Replace(std::string name, Polynomial& polynomial);		//замена записи
 
 	//Проверки
