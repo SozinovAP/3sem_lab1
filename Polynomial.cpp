@@ -4,10 +4,11 @@
 
 using namespace std;
 
-Polynomial::Polynomial()
+Polynom::Polynom()
 {
 	name = "";
 }
+
 
 Polynomial::Polynomial(const TList<Monom> &mon, string n)
 {
@@ -15,15 +16,15 @@ Polynomial::Polynomial(const TList<Monom> &mon, string n)
 	name = n;
 }
 
-Polynomial::Polynomial(Polynomial & p)
+Polynom::Polynom(Polynom & p)
 {
 	monoms = TList<Monom>(p.monoms);
 	name = p.name;
 }
 
-Polynomial& Polynomial::operator-(Polynomial& p)
+Polynom& Polynom::operator-(Polynom& p)
 {
-	Polynomial *res = new Polynomial(p);
+	Polynom *res = new Polynom(p);
 	for (int i = 0; i < (*res).monoms.GetLength(); i++)
 		(*res).monoms[i].SetCoef(-(*res).monoms[i].GetCoef());
 	for (int i = 0; i < monoms.GetLength(); i++)
@@ -33,9 +34,9 @@ Polynomial& Polynomial::operator-(Polynomial& p)
 	return *res;
 }
 
-Polynomial& Polynomial::operator+(Polynomial & p)
+Polynom& Polynom::operator+(Polynom & p)
 {
-	Polynomial *res = new Polynomial(p);
+	Polynom *res = new Polynom(p);
 
 	for (int i = 0; i < monoms.GetLength(); i++)
 	{
@@ -44,24 +45,24 @@ Polynomial& Polynomial::operator+(Polynomial & p)
 	return *res;
 }
 
-Polynomial& Polynomial::operator=(Polynomial & p)
+Polynom& Polynom::operator=(Polynom & p)
 {
 	monoms = TList<Monom>(p.monoms);
 
 	return *this;
 }
 
-bool Polynomial::IsEmpty()
+bool Polynom::IsEmpty()
 {
 	return monoms.IsEmpty();
 }
 
-void Polynomial::Sort()
+void Polynom::Sort()
 {
 	monoms.Sort(false);
 }
 
-int Polynomial::Det(int x, int y, int z)
+int Polynom::Det(int x, int y, int z)
 {
 	int sum = 0;
 	for (int i = 0; i < monoms.GetLength(); i++)
@@ -84,7 +85,7 @@ Polynomial& Polynomial::operator+=(const Monom &m)
 	monoms.Push_Back(m);
 }
 
-ostream & operator<<(ostream & stream, const Polynomial & p)
+ostream & operator<<(ostream & stream, const Polynom & p)
 {
 	for (int i = 0; i < p.monoms.GetLength(); i++)
 	{
@@ -100,7 +101,7 @@ ostream & operator<<(ostream & stream, const Polynomial & p)
 	return stream;
 }
 
-istream & operator>>(istream & stream, Polynomial & p)
+istream & operator>>(istream & stream, Polynom & p)
 {
 	p.monoms.Clear();
 	string str;
@@ -155,7 +156,7 @@ istream & operator>>(istream & stream, Polynomial & p)
 	return stream;
 }
 
-bool Polynomial::HasX()
+bool Polynom::HasX()
 {
 	bool x = false;
 	for (int i = 0; i < monoms.GetLength(); i++)
@@ -163,7 +164,7 @@ bool Polynomial::HasX()
 	return x;
 }
 
-bool Polynomial::HasY()
+bool Polynom::HasY()
 {
 	bool y = false;
 	for (int i = 0; i < monoms.GetLength(); i++)
@@ -171,7 +172,7 @@ bool Polynomial::HasY()
 	return y;
 }
 
-bool Polynomial::HasZ()
+bool Polynom::HasZ()
 {
 	bool z = false;
 	for (int i = 0; i < monoms.GetLength(); i++)
@@ -179,19 +180,19 @@ bool Polynomial::HasZ()
 	return z;
 }
 
-void Polynomial::SetName(string n)
+void Polynom::SetName(string n)
 {
 	name = n;
 }
 
-string Polynomial::GetName()
+string Polynom::GetName()
 {
 	return name;
 }
 
-Polynomial Polynomial::Dif(char v)
+Polynom Polynom::Dif(char v)
 {
-	Polynomial res = *this;
+	Polynom res = *this;
 	int p;
 	//if (v == 'x' || v == 'X')
 	v = abs((v % 32) - 26); // x=2   y=1    z=0
@@ -204,9 +205,9 @@ Polynomial Polynomial::Dif(char v)
 	return res;
 }
 
-Polynomial Polynomial::Integr(char v)
+Polynom Polynom::Integr(char v)
 {
-	Polynomial res = *this;
+	Polynom res = *this;
 	int p;
 	//if (v == 'x' || v == 'X')
 	v = abs((v % 32) - 26); // x=2   y=1    z=0

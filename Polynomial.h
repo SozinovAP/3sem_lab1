@@ -3,7 +3,7 @@
 #include "list.h"
 using namespace std;
 
-class Polynomial
+class Polynom
 {
 private:
 	TList<Monom> monoms;
@@ -19,8 +19,8 @@ public:
 	Polynomial& operator+=(const Monom &m);
 	Polynomial& operator=(Polynomial & p);
 
-	friend std::ostream & operator<<(std::ostream & stream, const Polynomial &p);
-	friend std::istream & operator>>(std::istream & stream, Polynomial & p);
+	friend std::ostream & operator<<(std::ostream & stream, const Polynom &p);
+	friend std::istream & operator>>(std::istream & stream, Polynom & p);
 
 	bool HasX();
 	bool HasY();
@@ -30,6 +30,6 @@ public:
 	int Det(int x, int y, int z);
 	void SetName(string n);
 	string GetName();
-	Polynomial Dif(char v);
-	Polynomial Integr(char v);
+	Polynom Dif(char v);
+	Polynom Integr(char v);
 };
