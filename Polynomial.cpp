@@ -9,26 +9,26 @@ Polynomial::Polynomial()
 	name = "";
 }
 
-Polynomial::Polynomial(const TList<Monom> &mon, string n)
+Polynomial::Polynomial(const TList<Monomial> &mon, string n)
 {
-	monoms = mon;
+	monomials = mon;
 	name = n;
 }
 
 Polynomial::Polynomial(Polynomial & p)
 {
-	monoms = TList<Monom>(p.monoms);
+	monomials = TList<Monomial>(p.monomials);
 	name = p.name;
 }
 
 Polynomial& Polynomial::operator-(Polynomial& p)
 {
 	Polynomial *res = new Polynomial(p);
-	for (int i = 0; i < (*res).monoms.GetLength(); i++)
-		(*res).monoms[i].SetCoef(-(*res).monoms[i].GetCoef());
-	for (int i = 0; i < monoms.GetLength(); i++)
+	for (int i = 0; i < (*res).monomials.GetLength(); i++)
+		(*res).monomials[i].SetCoef(-(*res).monomials[i].GetCoef());
+	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		(*res) += monoms[i];
+		(*res) += monomials[i];
 	}
 	return *res;
 }
@@ -37,72 +37,73 @@ Polynomial& Polynomial::operator+(Polynomial & p)
 {
 	Polynomial *res = new Polynomial(p);
 
-	for (int i = 0; i < monoms.GetLength(); i++)
+	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		(*res) += monoms[i];
+		(*res) += monomials[i];
 	}
 	return *res;
 }
 
 Polynomial& Polynomial::operator=(Polynomial & p)
 {
-	monoms = TList<Monom>(p.monoms);
+	monomials = TList<Monomial>(p.monomials);
 
 	return *this;
 }
 
 bool Polynomial::IsEmpty()
 {
-	return monoms.IsEmpty();
+	return monomials.IsEmpty();
 }
 
 void Polynomial::Sort()
 {
-	monoms.Sort(false);
+	monomials.Sort(false);
 }
 
 int Polynomial::Det(int x, int y, int z)
 {
 	int sum = 0;
-	for (int i = 0; i < monoms.GetLength(); i++)
+	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		sum += monoms[i].GetCoef() * (pow(x, monoms[i].GetPowers() / 10000)) * (pow(y, monoms[i].GetPowers() / 100 % 100)) * (pow(z, monoms[i].GetPowers() % 100));
+		sum += monomials[i].GetCoef() * (pow(x, monomials[i].GetPowers() / 10000)) * (pow(y, monomials[i].GetPowers() / 100 % 100)) * (pow(z, monomials[i].GetPowers() % 100));
 	}
 	return sum;
 }
 
-Polynomial& Polynomial::operator+=(const Monom &m)
+Polynomial& Polynomial::operator+=(const Monomial &m)
 {
-	for (int i = 0; i < monoms.GetLength(); i++)
+	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		if (monoms[i] == m)
+		if (monomials[i] == m)
 		{
-			monoms[i].SetCoef(monoms[i].GetCoef() + m.GetCoef());
-			return;
+			monomials[i].SetCoef(monomials[i].GetCoef() + m.GetCoef());
+			return *this;
 		}
 	}
-	monoms.Push_Back(m);
+	monomials.Push_Back(m);
+	return *this;
 }
 
 ostream & operator<<(ostream & stream, const Polynomial & p)
 {
-	for (int i = 0; i < p.monoms.GetLength(); i++)
+	for (int i = 0; i < p.monomials.GetLength(); i++)
 	{
 		if (i > 0)
 		{
 			stream << " ";
-			if (p.monoms[i].GetCoef() > 0)
+			if (p.monomials[i].GetCoef() > 0)
 				stream << "+";
 		}
 
-		stream << p.monoms[i];
+		stream << p.monomials[i];
 	}
 	return stream;
 }
 
 istream & operator>>(istream & stream, Polynomial & p)
 {
-	p.monoms.Clear();
+	p.monomials.Clear();
 	string str;
 	getline(stream, str);
 
@@ -139,7 +140,7 @@ istream & operator>>(istream & stream, Polynomial & p)
 			if (str[i] == '-' || str[i] == '+')
 			{
 				if (m.length() > 1 || (m[i] != '-' && m[i] != '+'))
-					p += Monom(m);
+					p += Monomial(m);
 				m = str[i];
 			}
 			else
@@ -150,7 +151,7 @@ istream & operator>>(istream & stream, Polynomial & p)
 	}
 
 	if (m.length() > 0) 
-		p += Monom(m);
+		p += Monomial(m);
 
 	return stream;
 }
@@ -158,24 +159,24 @@ istream & operator>>(istream & stream, Polynomial & p)
 bool Polynomial::HasX()
 {
 	bool x = false;
-	for (int i = 0; i < monoms.GetLength(); i++)
-		x = x || (monoms[i].GetPowers() / 10000);
+	for (int i = 0; i < monomials.GetLength(); i++)
+		x = x || (monomials[i].GetPowers() / 10000);
 	return x;
 }
 
 bool Polynomial::HasY()
 {
 	bool y = false;
-	for (int i = 0; i < monoms.GetLength(); i++)
-		y = y || (monoms[i].GetPowers() / 100 % 100);
+	for (int i = 0; i < monomials.GetLength(); i++)
+		y = y || (monomials[i].GetPowers() / 100 % 100);
 	return y;
 }
 
 bool Polynomial::HasZ()
 {
 	bool z = false;
-	for (int i = 0; i < monoms.GetLength(); i++)
-		z = z || (monoms[i].GetPowers() % 100);
+	for (int i = 0; i < monomials.GetLength(); i++)
+		z = z || (monomials[i].GetPowers() % 100);
 	return z;
 }
 
@@ -196,10 +197,10 @@ Polynomial Polynomial::Dif(char v)
 	//if (v == 'x' || v == 'X')
 	v = abs((v % 32) - 26); // x=2   y=1    z=0
 	p = pow(100, v);
-	for (int i = 0; i < monoms.GetLength(); i++)
+	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		res.monoms[i].SetCoef(res.monoms[i].GetCoef() * (res.monoms[i].GetPowers() / p % 100));
-		res.monoms[i].SetPowers(res.monoms[i].GetPowers() - 1 * pow(100, v));
+		res.monomials[i].SetCoef(res.monomials[i].GetCoef() * (res.monomials[i].GetPowers() / p % 100));
+		res.monomials[i].SetPowers(res.monomials[i].GetPowers() - 1 * pow(100, v));
 	}
 	return res;
 }
@@ -211,10 +212,10 @@ Polynomial Polynomial::Integr(char v)
 	//if (v == 'x' || v == 'X')
 	v = abs((v % 32) - 26); // x=2   y=1    z=0
 	p = pow(100, v);
-	for (int i = 0; i < monoms.GetLength(); i++)
+	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		res.monoms[i].SetCoef(res.monoms[i].GetCoef() / (res.monoms[i].GetPowers() / p % 100 + 1));
-		res.monoms[i].SetPowers(res.monoms[i].GetPowers() + 1 * pow(100, v));
+		res.monomials[i].SetCoef(res.monomials[i].GetCoef() / (res.monomials[i].GetPowers() / p % 100 + 1));
+		res.monomials[i].SetPowers(res.monomials[i].GetPowers() + 1 * pow(100, v));
 	}
 	return res;
 }
