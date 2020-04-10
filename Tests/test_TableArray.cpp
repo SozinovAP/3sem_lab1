@@ -57,8 +57,8 @@ TEST(TableArray, ta_canRemove_not_first_value)
 	ta.Insert("d", p);
 	ta.Insert("e", p);
 	ASSERT_NO_THROW(ta.Remove("b"));
+	ASSERT_NO_THROW(ta.Remove("d"));
 	ASSERT_NO_THROW(ta.Remove("e"));
-	ASSERT_NO_THROW(ta.Remove("c"));
 }
 
 TEST(TableArray, ta_can_find_exist_value)

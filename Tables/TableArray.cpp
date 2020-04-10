@@ -73,6 +73,7 @@ void TableArray::Remove(std::string name)
 	for (int i = stId; i < DataCount; i++)
 	{
 		records[i] = records[i + 1];
+		records[i].id = i;
 	}
 	
 }
