@@ -5,17 +5,12 @@ class TableArray : public Table
 {
 
 protected:
-	struct RecordArray : public Record
+	class RecordArray : public Record
 	{
+	public:
 		int id;
-		RecordArray()
-		{
-			id = -1;
-		}
-		RecordArray(std::string name, Polynomial polynomial, int id):Record(name,polynomial)
-		{
-			this->id = id;
-		}
+		RecordArray();
+		RecordArray(std::string name, Polynomial polynomial, int id);
 	};
 
 	Record* FindRecord(std::string name) override;

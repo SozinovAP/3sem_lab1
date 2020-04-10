@@ -1,13 +1,19 @@
 #include "TableArray.h"
 
-
-
+TableArray::RecordArray::RecordArray()
+{
+	id = -1;
+}
+TableArray::RecordArray::RecordArray(std::string name, Polynomial polynomial, int id):Record(name, polynomial)
+{
+	this->id = id;
+}
 
 Table::Record* TableArray::FindRecord(std::string name)
 {
 	for (size_t i = 0; i < DataCount; i++)
 	{
-		if (records[i].name == name)
+		if (records[i].GetName() == name)
 		{
 			return (records+i);
 		}

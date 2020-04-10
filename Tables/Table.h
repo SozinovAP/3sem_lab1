@@ -11,20 +11,16 @@ class Table
 protected:
 	
 	//сруктура хранения записи
-	struct Record
+	class Record
 	{
+	protected:
 		std::string name;
+	public:
 		Polynomial polynomial;
 
-		Record()
-		{
-			
-		}
-		Record(std::string name, Polynomial polynomial)
-		{
-			this->name = name;
-			this->polynomial = polynomial;
-		}
+		Record() {}
+		Record(std::string name, Polynomial polynomial);
+		std::string GetName();
 	};
 
 	int DataCount;//количетсво записей

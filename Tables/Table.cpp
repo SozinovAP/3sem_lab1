@@ -2,6 +2,16 @@
 
 using namespace std;
 
+Table::Record::Record(std::string name, Polynomial polynomial)
+{
+	this->name = name;
+	this->polynomial = polynomial;
+}
+string Table::Record::GetName()
+{
+	return name;
+}
+
 Table::Table()
 {
 	DataCount = 0;
