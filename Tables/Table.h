@@ -2,9 +2,8 @@
 #define TABLE_H
 
 #include <string>
-#include <iostream>
 #include <fstream>
-#include "Polynomial.h"
+#include "../Polynomial.h"
 
 class Table
 {
