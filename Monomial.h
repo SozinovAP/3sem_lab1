@@ -41,42 +41,9 @@ public:
 		return powers < monom.powers;
 	}
 
-	friend std::ostream& operator<<(std::ostream &stream, const Monomial &m)
-	{
-		if (m.coef == 0) return stream;
-
-		if (m.coef != 1)
-		{
-			if (m.coef == -1)
-				stream << "-";
-			else
-				stream << m.coef;
-		}
-		if (m.coef == 1 && m.powers == 0)
-		{
-			stream << "1";
-		}
-		if (m.powers / 10000)
-		{
-			stream << "x";
-			if (m.powers / 10000 != 1)
-				stream << "^" << m.powers / 10000;
-		}
-		if (m.powers / 100 % 100)
-		{
-			stream << "y";
-			if (m.powers / 100 % 100 != 1)
-				stream << "^" << m.powers / 100 % 100;
-		}
-		if (m.powers % 10)
-		{
-			stream << "z";
-			if (m.powers % 100 != 1)
-				stream << "^" << m.powers % 100;
-		}
-
-		return stream;
-	}
+	friend std::ostream& operator<<(std::ostream &stream, const Monomial &m);
+	std::string toStr();
+	
 };
 
 enum class input_exc

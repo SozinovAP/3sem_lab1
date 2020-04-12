@@ -7,29 +7,29 @@ class Polynomial
 {
 private:
 	TList<Monomial> monomials;
-	string name;
 
 public:
 	Polynomial();
-	Polynomial(const TList<Monomial> &mon, string n);
+	Polynomial(const TList<Monomial> &mon);
 	Polynomial(Polynomial& p);
+	Polynomial(string s);
 
 	Polynomial& operator-(Polynomial& p);
 	Polynomial& operator+(Polynomial& p);
 	Polynomial& operator+=(const Monomial &m);
 	Polynomial& operator=(Polynomial & p);
 
-	friend std::ostream & operator<<(std::ostream & stream, const Polynomial &p);
-	friend std::istream & operator>>(std::istream & stream, Polynomial & p);
+	friend ostream & operator<<(ostream & stream, const Polynomial &p);
+	friend istream & operator>>(istream & stream, Polynomial & p);
 
+	string ToStr() const;
 	bool HasX();
 	bool HasY();
 	bool HasZ();
 	bool IsEmpty();
 	void Sort();
 	int Det(int x, int y, int z);
-	void SetName(string n);
-	string GetName();
 	Polynomial Dif(char v);
 	Polynomial Integr(char v);
+	int GetMonomialsCount();
 };
