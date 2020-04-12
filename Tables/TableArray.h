@@ -23,5 +23,6 @@ public:
 
 	void Insert(std::string name, Polynomial& rec) override;
 	void Remove(std::string name) override;
+	void Clear() override;
 };
 

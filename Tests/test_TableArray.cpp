@@ -133,3 +133,15 @@ TEST(TableArray, ta_isEmpty_works_fine)
 	ta.Remove("a");
 	ASSERT_TRUE(ta.IsEmpty());
 }
+
+TEST(TableArray, ta_clear_works_fine)
+{
+	TableArray ta;
+	Polynomial p;
+	ta.Insert("a", p);
+
+
+	ASSERT_NO_THROW(ta.Clear());
+	ASSERT_TRUE(ta.IsEmpty());
+	ASSERT_ANY_THROW(ta.Remove("a"));
+}

@@ -17,11 +17,6 @@ Table::Table()
 	DataCount = 0;
 }
 
-Table::~Table()
-{
-	
-}
-
 int Table::GetCount() const			//получить количетсво записей
 {
 	return DataCount;
