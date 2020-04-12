@@ -1,0 +1,16 @@
+﻿  main.cpp
+  Monomial.cpp
+  Polynomial.cpp
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(26,28): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(32,29): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(38,28): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(117,169): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(181,9): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(185,59): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(196,9): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(200,59): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  Table.cpp
+  TableArray.cpp
+  TableTreeAVL.cpp
+  Создание кода...
+  VS_project.vcxproj -> C:\Users\Nikita\Desktop\lab\3sem_lab1\VS_project\x64\Debug\VS_project.exe

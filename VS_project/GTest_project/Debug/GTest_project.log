@@ -1,0 +1,19 @@
+﻿  Monomial.cpp
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Monomial.cpp(44,11): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Monomial.cpp(49,20): warning C4018: >: несоответствие типов со знаком и без знака
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Monomial.cpp(51,21): warning C4018: <: несоответствие типов со знаком и без знака
+  Polynomial.cpp
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(45,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(117,169): warning C4244: +=: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(181,9): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(185,59): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(196,9): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Polynomial.cpp(200,59): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  Table.cpp
+  TableArray.cpp
+C:\Users\Nikita\Desktop\lab\3sem_lab1\Tables\TableArray.cpp(14,23): warning C4018: <: несоответствие типов со знаком и без знака
+  TableTreeAVL.cpp
+  test_TableArray.cpp
+  test_TableTreeAVL.cpp
+  Создание кода...
+  GTest_project.vcxproj -> C:\Users\Nikita\Desktop\lab\3sem_lab1\VS_project\Debug\GTest_project.exe
