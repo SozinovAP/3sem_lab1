@@ -82,3 +82,88 @@ Monomial& Monomial::operator=(const Monomial &monom)
 	powers = monom.powers;
 	return *this;
 }
+
+std::ostream & operator<<(std::ostream & stream, const Monomial & m)
+{
+	if (m.coef == 0) return stream;
+
+	if (m.coef != 1)
+	{
+		if (m.coef == -1)
+			stream << "-";
+		else
+			stream << m.coef;
+	}
+	if (m.coef == 1 && m.powers == 0)
+	{
+		stream << "1";
+	}
+	if (m.powers / 10000)
+	{
+		stream << "x";
+		if (m.powers / 10000 != 1)
+			stream << "^" << m.powers / 10000;
+	}
+	if (m.powers / 100 % 100)
+	{
+		stream << "y";
+		if (m.powers / 100 % 100 != 1)
+			stream << "^" << m.powers / 100 % 100;
+	}
+	if (m.powers % 10)
+	{
+		stream << "z";
+		if (m.powers % 100 != 1)
+			stream << "^" << m.powers % 100;
+	}
+
+	return stream;
+}
+
+std::string Monomial::toStr()
+{
+	std::string s;
+	if (coef == 0) 
+		return s;
+
+	if (coef != 1)
+	{
+		if (coef == -1)
+			s += "-";
+		else
+			s += std::to_string(coef);
+	}
+	if (coef == 1 && powers == 0)
+	{
+		s += "1";
+	}
+	if (powers / 10000)
+	{
+		s += "x";
+		if (powers / 10000 != 1)
+		{
+			s += "^";
+			s += std::to_string(powers / 10000);
+		}
+	}
+	if (powers / 100 % 100)
+	{
+		s += "y";
+		if (powers / 100 % 100 != 1)
+		{
+			s += "^";
+			s += std::to_string(powers / 100 % 100);
+		}
+	}
+	if (powers % 10)
+	{
+		s += "z";
+		if (powers % 100 != 1)
+		{
+			s += "^";
+			s += std::to_string(powers % 100);
+		}
+	}
+
+	return s;
+}

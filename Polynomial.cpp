@@ -6,19 +6,67 @@ using namespace std;
 
 Polynomial::Polynomial()
 {
-	name = "";
 }
 
-Polynomial::Polynomial(const TList<Monomial> &mon, string n)
+Polynomial::Polynomial(const TList<Monomial> &mon)
 {
 	monomials = mon;
-	name = n;
 }
 
 Polynomial::Polynomial(Polynomial & p)
 {
 	monomials = TList<Monomial>(p.monomials);
-	name = p.name;
+}
+
+Polynomial::Polynomial(string s)
+{
+	Polynomial p;
+
+	int f = 0;
+	while ((f = s.find(" ", f)) != string::npos)
+	{
+		s.erase(f, 1);
+	}
+
+	f = 0;
+	while ((f = s.find("+-", f)) != string::npos)
+	{
+		s.erase(f, 1);
+	}
+
+	f = 0;
+	while ((f = s.find("*", f)) != string::npos)
+	{
+		s.erase(f, 1);
+	}
+
+	string m = "";
+
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (m.length() == 0 && s[i] == '-')
+		{
+			m += s[i];
+			i++;
+			m += s[i];
+		}
+		else
+		{
+			if (s[i] == '-' || s[i] == '+')
+			{
+				if (m.length() > 1 || (m[i] != '-' && m[i] != '+'))
+					monomials.Push_Back(Monomial(m));
+				m = s[i];
+			}
+			else
+			{
+				m += s[i];
+			}
+		}
+	}
+
+	if (m.length() > 0)
+		monomials.Push_Back(Monomial(m));
 }
 
 Polynomial& Polynomial::operator-(Polynomial& p)
@@ -87,18 +135,7 @@ Polynomial& Polynomial::operator+=(const Monomial &m)
 
 ostream & operator<<(ostream & stream, const Polynomial & p)
 {
-	for (int i = 0; i < p.monomials.GetLength(); i++)
-	{
-		if (i > 0)
-		{
-			stream << " ";
-			if (p.monomials[i].GetCoef() > 0)
-				stream << "+";
-		}
-
-		stream << p.monomials[i];
-	}
-	return stream;
+	return (stream << p.ToStr());
 }
 
 istream & operator>>(istream & stream, Polynomial & p)
@@ -106,53 +143,8 @@ istream & operator>>(istream & stream, Polynomial & p)
 	p.monomials.Clear();
 	string str;
 	getline(stream, str);
-
-	int f=0;
-	while ((f = str.find(" ", f)) != string::npos)
-	{
-		str.erase(f, 1);
-	}
-
-	f = 0;
-	while ((f = str.find("+-", f)) != string::npos)
-	{
-		str.erase(f, 1);
-	}
-
-	f = 0;
-	while ((f = str.find("*", f)) != string::npos)
-	{
-		str.erase(f, 1);
-	}
-
-	string m = "";
-
-	for (int i = 0; i < str.length(); i++)
-	{
-		if (m.length() == 0 && str[i] == '-')
-		{
-			m += str[i];
-			i++;
-			m += str[i];
-		}
-		else
-		{
-			if (str[i] == '-' || str[i] == '+')
-			{
-				if (m.length() > 1 || (m[i] != '-' && m[i] != '+'))
-					p += Monomial(m);
-				m = str[i];
-			}
-			else
-			{
-				m += str[i];
-			}
-		}
-	}
-
-	if (m.length() > 0) 
-		p += Monomial(m);
-
+	Polynomial tmp(str);
+	p = tmp;
 	return stream;
 }
 
@@ -178,16 +170,6 @@ bool Polynomial::HasZ()
 	for (int i = 0; i < monomials.GetLength(); i++)
 		z = z || (monomials[i].GetPowers() % 100);
 	return z;
-}
-
-void Polynomial::SetName(string n)
-{
-	name = n;
-}
-
-string Polynomial::GetName()
-{
-	return name;
 }
 
 Polynomial Polynomial::Dif(char v)
@@ -218,4 +200,26 @@ Polynomial Polynomial::Integr(char v)
 		res.monomials[i].SetPowers(res.monomials[i].GetPowers() + 1 * pow(100, v));
 	}
 	return res;
+}
+
+int Polynomial::GetMonomialsCount()
+{
+	return monomials.GetLength();
+}
+
+string Polynomial::ToStr() const
+{
+	string s;
+	for (int i = 0; i < monomials.GetLength(); i++)
+	{
+		if (i > 0)
+		{
+			s += " ";
+			if (monomials[i].GetCoef() > 0)
+				s += "+";
+		}
+
+		s += monomials[i].toStr();
+	}
+	return s;
 }
