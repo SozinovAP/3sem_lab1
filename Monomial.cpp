@@ -1,3 +1,4 @@
+#pragma once
 #include "Monomial.h"
 
 Monomial::Monomial(int coef, int powers)

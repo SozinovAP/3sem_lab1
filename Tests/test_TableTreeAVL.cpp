@@ -1,4 +1,6 @@
-//Insert gtest lib here
+#pragma once
+#include "gtest/gtest.h"
+#include "../Tables/TableTreeAVL.h"
 
 TEST(TableTreeAVL, tt_default_constructor)
 {

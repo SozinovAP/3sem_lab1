@@ -1,5 +1,6 @@
-//Insert gtest lib here
-
+#pragma once
+#include "gtest/gtest.h"
+#include "../Tables/TableArray.h"
 
 TEST(TableArray, ta_default_constructor)
 {
