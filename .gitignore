@@ -1,4 +1,5 @@
 VS_project/.vs/VS_project/v16/ipch
+*.log
 
 # Prerequisites
 *.d
