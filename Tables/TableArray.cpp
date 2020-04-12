@@ -24,8 +24,8 @@ Table::Record* TableArray::FindRecord(std::string name)
 
 TableArray::TableArray(int startLength)
 {
-	records = new RecordArray[startLength];
 	length = startLength;
+	records = new RecordArray[length];
 }
 
 TableArray::~TableArray()
@@ -81,5 +81,14 @@ void TableArray::Remove(std::string name)
 		records[i] = records[i + 1];
 		records[i].id = i;
 	}
+	
+}
+
+void TableArray::Clear()
+{
+	delete[] records;
+	DataCount = 0;
+	length = 0;
+	records = new RecordArray[length];
 	
 }
