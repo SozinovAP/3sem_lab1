@@ -150,7 +150,7 @@ Polynomial& Polynomial::operator+=(const Monomial &m)
 {
 	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		if (monomials[i] == m)
+		if (monomials[i].GetPowers == m.GetPowers)
 		{
 			monomials[i].SetCoef(monomials[i].GetCoef() + m.GetCoef());
 			return *this;
