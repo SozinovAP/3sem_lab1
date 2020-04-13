@@ -6,6 +6,7 @@ TableTreeAVL::RecordTreeAVL::RecordTreeAVL()
 	rightChild = nullptr;
 	parent = nullptr;
 	heightDiff = 0;
+	isLeftChild = false;
 }
 TableTreeAVL::RecordTreeAVL::RecordTreeAVL(std::string name, Polynomial polynomial) :Record(name, polynomial)
 {
@@ -13,6 +14,43 @@ TableTreeAVL::RecordTreeAVL::RecordTreeAVL(std::string name, Polynomial polynomi
 	this->rightChild = nullptr;
 	this->parent = nullptr;
 	this->heightDiff = 0;
+	this->isLeftChild = false;
+}
+Record* TableTreeAVL::RecordTreeAVL::GetNext()
+{
+	if (rightChild != nullptr)
+	{
+		RecordTreeAVL* nextByValue = rightChild;
+		while (nextByValue->GetChild(true) != nullptr)
+		{
+			nextByValue = nextByValue->GetChild(true);
+		}
+
+		return nextByValue;
+	}
+	else
+	{
+		if (isLeftChild)
+		{
+			return parent;
+		}
+		else
+		{
+			RecordTreeAVL* curr = this;
+			while (!curr->isLeftChild && curr->parent != nullptr)
+			{
+				curr = curr->parent;
+			}
+
+			RecordTreeAVL* parent = curr->parent;
+			if (parent != nullptr)
+			{
+				return curr = parent;
+			}
+
+			return curr;
+		}
+	}
 }
 void TableTreeAVL::RecordTreeAVL::SetChild(RecordTreeAVL* child, bool left)
 {
@@ -45,14 +83,16 @@ TableTreeAVL::RecordTreeAVL* TableTreeAVL::RecordTreeAVL::GetParent()
 void TableTreeAVL::RecordTreeAVL::Rotate(bool leftChild)
 {
 	RecordTreeAVL* child = GetChild(leftChild);
-	bool itsLeftChild = parent->GetChild(true) == this;
-	GetParent()->SetChild(child, itsLeftChild);
-	SetChild(child->GetChild(!leftChild), leftChild);
-	child->SetChild(this, !leftChild);
+	GetParent()->SetChild(child, isLeftChild);
+	if (child != nullptr)
+	{
+		SetChild(child->GetChild(!leftChild), leftChild);
+		child->SetChild(this, !leftChild);
+	}
 }
 
 
-Table::Record* TableTreeAVL::FindRecord(std::string name)
+Record* TableTreeAVL::FindRecord(std::string name)
 {
 	bool nextLeft = firstRecordLeft;
 	RecordTreeAVL* curRecord = head.GetChild(nextLeft);
@@ -91,7 +131,7 @@ bool TableTreeAVL::Balance(RecordTreeAVL* record)
 			RecordTreeAVL* badChildChild = badChild->GetChild(!badChildLeft);
 			int k = badChildChild->heightDiff;
 			badChild->Rotate(!badChildLeft);
-			record->Rotate(badChild);
+			record->Rotate(badChildLeft);
 
 			badChildChild->heightDiff = 0;	
 			record->heightDiff = (k < 0 ? 1 : 0);
@@ -110,6 +150,12 @@ bool TableTreeAVL::Balance(RecordTreeAVL* record)
 }
 
 
+
+TableTreeAVL::TableTreeAVL()
+{
+	height = 0;
+	minRecord = &head;
+}
 
 TableTreeAVL::~TableTreeAVL()
 {
@@ -163,7 +209,12 @@ void TableTreeAVL::Insert(std::string name, Polynomial& rec)
 	}
 	if (DataCount == 0)
 	{
+		minRecord = newRecord;
 		height++;
+	}
+	else if(newRecord->isLeftChild && newRecord->GetParent()==minRecord)
+	{
+		minRecord = newRecord;
 	}
 	DataCount++;
 }
@@ -177,6 +228,10 @@ void TableTreeAVL::Remove(RecordTreeAVL* record)
 		if (leftChild == nullptr)
 		{
 			RecordTreeAVL* parent = record->GetParent();
+			if (record == minRecord)
+			{
+				minRecord = parent;
+			}
 			parent->SetChild(nullptr, record->isLeftChild);
 			bool prevChildLeft = record->isLeftChild;
 			delete record;
@@ -206,6 +261,7 @@ void TableTreeAVL::Remove(RecordTreeAVL* record)
 			{
 				height--;
 			}
+
 			DataCount--;
 		}
 		else
@@ -278,4 +334,16 @@ void TableTreeAVL::Remove(std::string name)
 int TableTreeAVL::GetHeight()
 {
 	return height;
+}
+
+Table::iterator TableTreeAVL::begin()
+{
+	iterator tmp(minRecord);
+	return tmp;
+}
+
+Table::iterator TableTreeAVL::end()
+{
+	iterator tmp(&head);
+	return tmp;
 }

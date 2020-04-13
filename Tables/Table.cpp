@@ -2,15 +2,22 @@
 
 using namespace std;
 
-Table::Record::Record(std::string name, Polynomial polynomial)
+Record::Record(std::string name, Polynomial polynomial)
 {
 	this->name = name;
 	this->polynomial = polynomial;
 }
-string Table::Record::GetName()
+
+Record* Record::GetNext()
+{
+	return (this + 1);
+}
+
+string Record::GetName() const
 {
 	return name;
 }
+
 
 Table::Table()
 {
