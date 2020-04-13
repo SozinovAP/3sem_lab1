@@ -31,17 +31,21 @@ private:
 	int tableXPos;
 	Vector2i consoleSize;
 
-	
-
-	menus curMenuPos;
+	menus curMenu;
 
 	bool OnMenuPressed();
 	void InputOnMenu();
-	void DrawMenu();
+	void UpdateMenu();
 
-	std::string InputStr(std::string info);
+	std::string InputStr(std::string info, bool goBack);
 
 	TableManager tableManager;
+
+	int c = 0;//TODO REMOVE
+
+	int prevPolynomsCount = 0;
+	Vector2i prevMenuPos;
+
 public:
 	Visual(TableManager& tableManager);
 	

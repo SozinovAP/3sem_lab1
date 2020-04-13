@@ -87,7 +87,39 @@ bool TableManager::IsEmpty() const
 	return first;
 }
 
+void TableManager::Read(std::string pFileName)
+{
+	
+}
+
+void TableManager::Write(std::string pFileName)
+{
+	int lastPointPos = pFileName.find_last_of('.');
+	string extention = ".txt";
+	if (lastPointPos != -1)
+	{
+		extention = lastPointPos == -1 ? ".txt" : pFileName.substr(lastPointPos);
+		pFileName = pFileName.substr(0, lastPointPos);
+	}
+	for (int i = 0; i < tables.GetLength(); i++)
+	{
+		string className = typeid(*tables.Get(i)).name();
+		className.replace(className.find("class "), 6, "");
+		tables.Get(i)->Write(pFileName + "." + className + extention);
+	}
+}
+
 void TableManager::AddTable(Table* table)
 {
 	tables.Push_Back(table);
+}
+
+Table* TableManager::GetTable(int num)
+{
+	return tables.Get(num);
+}
+
+int TableManager::GetTablesCount()
+{
+	return tables.GetLength();
 }

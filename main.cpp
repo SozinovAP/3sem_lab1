@@ -12,4 +12,12 @@ int main()
 	TableTreeAVL ta;
 	tableManager.AddTable(&ta);
 	Visual visual(tableManager);
+
+	Polynomial p("xyz");
+	Polynomial p2("xy^2");
+	tableManager.Insert("a", p);
+	tableManager.Insert("b", p2);
+
+	tableManager.Write("a.txt");
+
 }
