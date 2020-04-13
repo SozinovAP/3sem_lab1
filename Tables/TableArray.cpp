@@ -1,14 +1,5 @@
 #include "TableArray.h"
 
-TableArray::RecordArray::RecordArray()
-{
-	id = -1;
-}
-TableArray::RecordArray::RecordArray(std::string name, Polynomial polynomial, int id):Record(name, polynomial)
-{
-	this->id = id;
-}
-
 Table::Record* TableArray::FindRecord(std::string name)
 {
 	for (size_t i = 0; i < DataCount; i++)
@@ -25,7 +16,7 @@ Table::Record* TableArray::FindRecord(std::string name)
 TableArray::TableArray(int startLength)
 {
 	length = startLength;
-	records = new RecordArray[length];
+	records = new Record[length];
 }
 
 TableArray::~TableArray()
@@ -35,7 +26,7 @@ TableArray::~TableArray()
 
 void TableArray::Insert(std::string name, Polynomial& polynomial)
 {
-	RecordArray* foundRecord = (RecordArray*)FindRecord(name);
+	Record* foundRecord = FindRecord(name);
 
 	if (foundRecord != nullptr)
 	{
@@ -45,21 +36,21 @@ void TableArray::Insert(std::string name, Polynomial& polynomial)
 	
 	if (DataCount < length)
 	{
-		RecordArray tmp(name, polynomial, DataCount);
+		Record tmp(name, polynomial);
 		records[DataCount] = tmp;
 		DataCount++;
 	}
 	else
 	{
 		// if DataCount==length update records
-		RecordArray* newRecords = new RecordArray[length+1];
-		for (int i=0; i < length; i++)
+		length += TableArray_NoSpaceIncreaseCount;
+		Record* newRecords = new Record[length];
+		for (int i=0; i < DataCount; i++)
 		{
 			newRecords[i] = records[i];
 		}
-		RecordArray tmp(name, polynomial, length);
-		newRecords[length] = tmp;
-		length++;
+		Record tmp(name, polynomial);
+		newRecords[DataCount] = tmp;
 		DataCount++;
 		delete[] records;
 		records = newRecords;
@@ -68,18 +59,17 @@ void TableArray::Insert(std::string name, Polynomial& polynomial)
 
 void TableArray::Remove(std::string name)
 {
-	RecordArray* foundRecord = (RecordArray*)FindRecord(name);
+	Record* foundRecord = FindRecord(name);
 	if (foundRecord == nullptr)
 	{
 		throw "Item doesn't exist";
 	}
 
-	int stId = foundRecord->id;
+	int stId = foundRecord - records;
 	DataCount--;
 	for (int i = stId; i < DataCount; i++)
 	{
 		records[i] = records[i + 1];
-		records[i].id = i;
 	}
 	
 }
@@ -89,6 +79,6 @@ void TableArray::Clear()
 	delete[] records;
 	DataCount = 0;
 	length = 0;
-	records = new RecordArray[length];
+	records = new Record[length];
 	
 }

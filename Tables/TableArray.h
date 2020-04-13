@@ -1,21 +1,15 @@
 #pragma once
 #include "Table.h"
 
+#define TableArray_NoSpaceIncreaseCount 5
+
 class TableArray : public Table
 {
 
 protected:
-	class RecordArray : public Record
-	{
-	public:
-		int id;
-		RecordArray();
-		RecordArray(std::string name, Polynomial polynomial, int id);
-	};
-
 	Record* FindRecord(std::string name) override;
 private:
-	RecordArray* records;
+	Record* records;
 	int length;
 public:
 	TableArray(int startLength=0);
