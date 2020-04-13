@@ -18,6 +18,11 @@ public:
 	void Replace(std::string name, Polynomial& polynomial);
 	bool IsEmpty() const;
 
+	void Read(std::string pFileName);
+	void Write(std::string pFileName);
+
 	void AddTable(Table* table);
+	Table* GetTable(int num);
+	int GetTablesCount();
 };
 

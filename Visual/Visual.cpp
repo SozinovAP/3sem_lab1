@@ -1,6 +1,7 @@
 #include "Visual.h"
 #include <conio.h>
 #include <algorithm>
+#include <math.h>
 
 #define COMMAND_KEYS 224
 #define KEY_UP 72
@@ -17,8 +18,14 @@
 using namespace std;
 
 
-string Visual::InputStr(string info)
+string Visual::InputStr(string info, bool goBack=false)
 {
+	
+	Vector2i prevPos = console.Where();
+	console.GotoXY(0, max(tableManager.GetCount(), consoleSize.y - 1));
+
+	UpdateMenu();
+
 	int argNum = 0;
 	cout << info << ": ";
 	int startX = console.WhereX();
@@ -72,6 +79,15 @@ string Visual::InputStr(string info)
 		{
 			console.GotoXY(0, console.WhereY());
 			console.ClrEol();
+			if (goBack)
+			{
+				console.GotoXY(prevPos);
+			}
+			else
+			{
+				console.GotoXY(0, console.WhereY());
+			}
+			UpdateMenu();
 			return result;
 		}
 		else if (input == KEY_BACKSPACE)
@@ -102,27 +118,44 @@ string Visual::InputStr(string info)
 
 bool Visual::OnMenuPressed()
 {
-	switch (curMenuPos)
+	switch (curMenu)
 	{
 	case menus::Formula:
-		console.GotoXY(0, consoleSize.y - 1);
 		{
 			string str = InputStr("¬ведите формулу");
 			//Formula f(str);
 			//f.Parse();
+
+			Polynomial tmp(str);
+			tableManager.Insert(to_string(c++), tmp);
+			UpdateMenu();
+
+			UpdatePolynoms();
 		}
 		break;
 	case menus::DeletePolynom:
 
-		console.GotoXY(0, consoleSize.y - 1);
 		{
 			string str = InputStr("¬ведите им€ полинома");
+			tableManager.Remove(str);
+			UpdateMenu();
+
+			UpdatePolynoms();
+			console.GotoXY(console.WhereX(), console.WhereY() - 1);
 		}
 
 		break;
 	case menus::SaveToFile:
+		{
+			string str = InputStr("¬ведите им€ файла");
+			tableManager.Write(str);
+		}
 		break;
 	case menus::LoadFromFile:
+		{
+			string str = InputStr("¬ведите им€ файла");
+			tableManager.Read(str);
+		}
 		break;
 	case menus::Exit:
 		return true;
@@ -147,12 +180,12 @@ void Visual::InputOnMenu()
 		switch (arrow)
 		{
 		case KEY_DOWN:
-			curMenuPos = (menus)(((int)curMenuPos + 1) % (int)menus::menusCount);
-			DrawMenu();
+			curMenu = (menus)(((int)curMenu + 1) % (int)menus::menusCount);
+			UpdateMenu();
 			break;
 		case KEY_UP:
-			curMenuPos = (menus)(((int)curMenuPos + (int)menus::menusCount - 1) % (int)menus::menusCount);
-			DrawMenu();
+			curMenu = (menus)(((int)curMenu + (int)menus::menusCount - 1) % (int)menus::menusCount);
+			UpdateMenu();
 			break;
 		default:
 			break;
@@ -179,58 +212,96 @@ Visual::Visual(TableManager& tableManager)
 	tableXPos = (int)(consoleSize.x * 2.0 / 3.0);
 	console.GotoXY(0, consoleSize.y-1);
 
-	curMenuPos = (menus)0;
+	curMenu = (menus)0;
 
 	this->tableManager = tableManager;
-
+	UpdateMenu();
 	UpdatePolynoms();
-	DrawMenu();
 
 	InputOnMenu();
 }
 
 void Visual::UpdatePolynoms()
 {
+	if (tableManager.GetTablesCount() == 0)
+	{
+		return;
+	}
+
 	Vector2i lastPos = console.Where();
 	bool wasLVertical = console.IsLVertical();
 	bool wasUnderscore = console.IsUnderscore();
 
 	console.SetUnderscore(false);
-	for (int i = 0; i <= consoleSize.y; i++)
+	Table* firstTable = tableManager.GetTable(0);
+	int i = 0;
+	for (auto it = firstTable->begin(); it != firstTable->end(); it++, i++)
 	{
+		string str = (*it).GetName() + " = " + (*it).polynomial.ToStr();
 		console.GotoXY(tableXPos, i);
-		if (i == consoleSize.y)
+		if (i+1 == firstTable->GetCount())
 		{
 			console.SetUnderscore(true);
 		}
 		console.SetLVertical(true);
-		//cout first symbol
-		cout << "a";
+		if (str.length() != 0)
+		{
+			cout << str.substr(0, 1);
+		}
 		console.SetLVertical(false);
-		//cout others
-		cout << "bcd";
+		if (str.length() > 1)
+		{
+			cout << str.substr(1, str.length() - 1);
+		}
 	}
+	console.SetLVertical(false);
+	console.SetUnderscore(false);
+
+	for (; i < prevPolynomsCount; i++)
+	{
+		console.GotoXY(tableXPos, i);
+		console.ClrEol();
+	}
+	prevPolynomsCount = tableManager.GetCount();
+
 	console.SetLVertical(wasLVertical);
 	console.SetUnderscore(wasUnderscore);
 	console.GotoXY(lastPos);
 }
 
-void Visual::DrawMenu()
+void Visual::UpdateMenu()
 {
-	Vector2i lastPos = console.Where();
+	Vector2i pos(0, max(0, max(tableManager.GetCount(), console.WhereY()+1) - consoleSize.y));
+
+	Vector2i lastConsolePos = console.Where();
 	Colors prevTextColor = console.GetTextColor();
 	Colors prevBackgroundColor = console.GetBackgroundColor();
+
 	for (int i = 0; i < (int)menus::menusCount; i++)
 	{
-		console.GotoXY(0, i);
-		console.SetBackgroundColor((int)curMenuPos == i ? Colors::COLOR_WHITE : Colors::COLOR_BLACK);
-		console.SetTextColor((int)curMenuPos == i ? Colors::COLOR_BLACK : Colors::COLOR_WHITE);
+		Vector2i p(0, i);
+		console.GotoXY(p + prevMenuPos);
 
-		cout << i << "." << menuStrings[i] << ".";
+		string str(string(to_string(i) + "." + menuStrings[i] + ".").length(), ' ');
+		cout << string(string(to_string(i) + "." + menuStrings[i] + ".").length(), ' ');
+	}
+
+
+	
+	for (int i = 0; i < (int)menus::menusCount; i++)
+	{
+		Vector2i p(0, i);
+		console.GotoXY(p + pos);
+		console.SetBackgroundColor((int)curMenu == i ? Colors::COLOR_WHITE : Colors::COLOR_BLACK);
+		console.SetTextColor((int)curMenu == i ? Colors::COLOR_BLACK : Colors::COLOR_WHITE);
+
+		cout << string(to_string(i) + "." + menuStrings[i] + ".");
 	}
 	console.SetBackgroundColor(prevBackgroundColor);
 	console.SetTextColor(prevTextColor);
-	console.GotoXY(lastPos);
+	console.GotoXY(lastConsolePos);
+
+	prevMenuPos = pos;
 }
 
 

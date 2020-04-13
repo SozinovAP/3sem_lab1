@@ -72,7 +72,10 @@ void Table::Write(string pFileName)
 	ofstream file;
 	file.open(pFileName);
 
-	//TODO: запись в файл
+	for (auto it = begin(); it != end(); it++)
+	{
+		file << (*it).GetName() << "=" << (*it).polynomial << endl;
+	}
 		
 	file.close();
 }

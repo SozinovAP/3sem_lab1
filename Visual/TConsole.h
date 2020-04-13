@@ -31,6 +31,11 @@ struct Vector2i
         this->x = x;
         this->y = y;
     }
+    Vector2i& operator+(const Vector2i& other)
+    {
+        Vector2i res(x + other.x, y + other.y);
+        return res;
+    }
 };
 
 //класс консоли
