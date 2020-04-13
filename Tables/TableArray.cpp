@@ -1,6 +1,6 @@
 #include "TableArray.h"
 
-Table::Record* TableArray::FindRecord(std::string name)
+Record* TableArray::FindRecord(std::string name)
 {
 	for (size_t i = 0; i < DataCount; i++)
 	{
@@ -81,4 +81,16 @@ void TableArray::Clear()
 	length = 0;
 	records = new Record[length];
 	
+}
+
+Table::iterator TableArray::begin()
+{
+	iterator tmp(records);
+	return tmp;
+}
+
+Table::iterator TableArray::end()
+{
+	iterator tmp(records + DataCount);
+	return tmp;
 }

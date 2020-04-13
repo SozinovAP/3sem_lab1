@@ -146,3 +146,43 @@ TEST(TableArray, ta_clear_works_fine)
 	ASSERT_TRUE(ta.IsEmpty());
 	ASSERT_ANY_THROW(ta.Remove("a"));
 }
+
+TEST(TableArray, ta_iterators_works_fine)
+{
+	TableArray ta;
+
+	ASSERT_NO_THROW(ta.begin());
+	ASSERT_NO_THROW(ta.end());
+
+	ASSERT_TRUE(ta.begin() == ta.end());
+
+	Polynomial p;
+	string name = "a";
+	ta.Insert(name, p);
+	ASSERT_NO_THROW(ta.begin());
+	ASSERT_NO_THROW(ta.end());
+
+	ASSERT_FALSE(ta.begin() == ta.end());
+	ASSERT_TRUE(++ta.begin() == ta.end());
+	ASSERT_EQ((*ta.begin()).GetName(), name);
+
+	ta.Remove("a");
+
+	ASSERT_TRUE(ta.begin() == ta.end());
+
+	const int count = 10;
+	int a[count]{ 1,2,3,6,4,5,7,0,8,9 };
+	for (int i = 0; i < count; i++)
+	{
+		ta.Insert(to_string(a[i]), p);
+	}
+
+	int x = 0;
+	for (Table::iterator it = ta.begin(); it != ta.end(); it++)
+	{
+		ASSERT_EQ((*it).GetName(), to_string(a[x]));
+		x++;
+	}
+	ASSERT_EQ(x, count);
+
+}

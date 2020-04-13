@@ -16,6 +16,8 @@ protected:
 		RecordTreeAVL();
 		RecordTreeAVL(std::string name, Polynomial polynomial);
 
+		Record* GetNext();
+
 		void SetChild(RecordTreeAVL* child, bool left);
 		RecordTreeAVL* GetChild(bool left);
 		RecordTreeAVL* GetParent();
@@ -24,15 +26,18 @@ protected:
 	};
 
 	RecordTreeAVL head;
-	int height = 0;
+	int height;
 
 	Record* FindRecord(std::string name) override;
 	bool Balance(RecordTreeAVL* record);
 	void Remove(RecordTreeAVL* record);
 	void Clear(RecordTreeAVL* start);
+
+	Record* minRecord;
 private:
 	const bool firstRecordLeft = true;
 public:
+	TableTreeAVL();
 	~TableTreeAVL();
 
 	void Insert(std::string name, Polynomial& rec) override;
@@ -40,5 +45,9 @@ public:
 	void Clear() override;
 
 	int GetHeight();
+
+	//итераторы
+	iterator begin() override;
+	iterator end() override;
 };
 
