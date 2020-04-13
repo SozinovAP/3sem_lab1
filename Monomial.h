@@ -15,31 +15,14 @@ public:
 	Monomial(const Monomial& monom);
 	Monomial(const std::string &str);
 
-	void SetCoef(int coef)
-	{ 
-		this->coef = coef; 
-	}
-	int GetCoef(void) const 
-	{
-		return coef; 
-	}
-	void SetPowers(int powers) 
-	{ 
-		this->powers = powers; 
-	}
-	int GetPowers(void) const 
-	{ 
-		return powers; 
-	}
+	void SetCoef(int coef);
+	int GetCoef(void) const;
+	void SetPowers(int powers);
+	int GetPowers(void) const;
 	Monomial& operator=(const Monomial &monom);
-	int operator==(const Monomial &monom) 
-	{
-		return powers == monom.powers;
-	}
-	int operator<(const Monomial &monom) 
-	{
-		return powers < monom.powers;
-	}
+	bool operator==(const Monomial &monom);
+	bool operator!=(const Monomial &monom);
+	bool operator<(const Monomial &monom);
 
 	friend std::ostream& operator<<(std::ostream &stream, const Monomial &m);
 	std::string toStr();

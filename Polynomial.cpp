@@ -67,6 +67,7 @@ Polynomial::Polynomial(string s)
 
 	if (m.length() > 0)
 		monomials.Push_Back(Monomial(m));
+	this->Sort();
 }
 
 Polynomial& Polynomial::operator-(Polynomial& p)
@@ -95,8 +96,34 @@ Polynomial& Polynomial::operator+(Polynomial & p)
 Polynomial& Polynomial::operator=(Polynomial & p)
 {
 	monomials = TList<Monomial>(p.monomials);
-
+	this->Sort();
 	return *this;
+}
+
+bool Polynomial::operator==(Polynomial & p)
+{
+	if (monomials.GetLength() != p.monomials.GetLength())
+		return false;
+	for (int i = 0; i < monomials.GetLength(); i++)
+	{
+		if (monomials[i] != p.monomials[i])
+			return false;
+	}
+
+	return true;
+}
+
+bool Polynomial::operator!=(Polynomial & p)
+{
+	if (monomials.GetLength() != p.monomials.GetLength())
+		return true;
+	for (int i = 0; i < monomials.GetLength(); i++)
+	{
+		if (monomials[i] != p.monomials[i])
+			return true;
+	}
+
+	return false;
 }
 
 bool Polynomial::IsEmpty()
@@ -130,6 +157,7 @@ Polynomial& Polynomial::operator+=(const Monomial &m)
 		}
 	}
 	monomials.Push_Back(m);
+	this->Sort();
 	return *this;
 }
 
@@ -145,6 +173,7 @@ istream & operator>>(istream & stream, Polynomial & p)
 	getline(stream, str);
 	Polynomial tmp(str);
 	p = tmp;
+	p.Sort();
 	return stream;
 }
 

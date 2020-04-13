@@ -1,4 +1,3 @@
-#pragma once
 #include "Monomial.h"
 
 Monomial::Monomial(int coef, int powers)
@@ -77,11 +76,46 @@ Monomial::Monomial(const std::string &str)
 
 }
 
+void Monomial::SetCoef(int coef)
+{
+	this->coef = coef;
+}
+
+int Monomial::GetCoef(void) const
+{
+	return coef;
+}
+
+void Monomial::SetPowers(int powers)
+{
+	this->powers = powers;
+}
+
+int Monomial::GetPowers(void) const
+{
+	return powers;
+}
+
 Monomial& Monomial::operator=(const Monomial &monom)
 {
 	coef = monom.coef;
 	powers = monom.powers;
 	return *this;
+}
+
+bool Monomial::operator==(const Monomial &monom)
+{
+	return (powers == monom.powers && coef == monom.coef);
+}
+
+bool Monomial::operator!=(const Monomial &monom)
+{
+	return (powers != monom.powers || coef != monom.coef);
+}
+
+bool Monomial::operator<(const Monomial &monom)
+{
+	return (powers < monom.powers);
 }
 
 std::ostream & operator<<(std::ostream & stream, const Monomial & m)

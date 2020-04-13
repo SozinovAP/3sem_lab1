@@ -18,6 +18,8 @@ public:
 	Polynomial& operator+(Polynomial& p);
 	Polynomial& operator+=(const Monomial &m);
 	Polynomial& operator=(Polynomial & p);
+	bool operator==(Polynomial & p);
+	bool operator!=(Polynomial & p);
 
 	friend ostream & operator<<(ostream & stream, const Polynomial &p);
 	friend istream & operator>>(istream & stream, Polynomial & p);
