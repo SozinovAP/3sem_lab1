@@ -4,7 +4,7 @@ Record* TableArray::FindRecord(std::string name)
 {
 	for (size_t i = 0; i < DataCount; i++)
 	{
-		if (records[i].GetName() == name)
+		if (records[i] == name)
 		{
 			return (records+i);
 		}

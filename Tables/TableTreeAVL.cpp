@@ -101,11 +101,11 @@ Record* TableTreeAVL::FindRecord(std::string name)
 	//go down, looking for parent for newRecord
 	while (curRecord != nullptr)
 	{
-		if (name == curRecord->GetName())
+		if (name == *curRecord)
 		{
 			return curRecord;
 		}
-		nextLeft = name < curRecord->GetName();
+		nextLeft = name < *curRecord;
 
 		curRecord = curRecord->GetChild(nextLeft);
 	}
@@ -171,11 +171,11 @@ void TableTreeAVL::Insert(std::string name, Polynomial& rec)
 	//go down, looking for parent for newRecord
 	while (curRecord != nullptr)
 	{
-		if (name == curRecord->GetName())
+		if (name == *curRecord)
 		{
 			throw "Item with same name already exists";
 		}
-		nextLeft = name < curRecord->GetName();
+		nextLeft = name < *curRecord;
 
 		parentRecord = curRecord;
 		curRecord = curRecord->GetChild(nextLeft);

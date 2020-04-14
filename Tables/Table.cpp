@@ -24,7 +24,7 @@ Table::Table()
 	DataCount = 0;
 }
 
-int Table::GetCount() const			//получить количетсво записей
+int Table::GetCount() const
 {
 	return DataCount;
 }
@@ -46,7 +46,7 @@ void Table::Replace(std::string name, Polynomial& polynomial)
 }
 
 
-bool Table::IsEmpty() const				//проверка на пустоту
+bool Table::IsEmpty() const
 {
 	return (DataCount == 0);
 }
@@ -79,3 +79,96 @@ void Table::Write(string pFileName)
 		
 	file.close();
 }
+
+#pragma region Compare operators
+bool Record::operator==(const string& other) const
+{
+	return name == other;
+}
+
+bool Record::operator!=(const string& other) const
+{
+	return !(this->operator==(other));
+}
+
+bool Record::operator<(const string& other) const
+{
+	return (name.length() < other.length() || (name.length() == other.length() && name < other));
+}
+
+bool Record::operator<=(const string& other) const
+{
+	return (this->operator==(other) || this->operator<(other));
+}
+
+bool Record::operator>(const string& other) const
+{
+	return !(this->operator<=(other));
+}
+
+bool Record::operator>=(const string& other) const
+{
+	return !(this->operator<(other));
+}
+
+bool Record::operator==(const Record& other) const
+{
+	return (this->operator==(other.name));
+}
+
+bool Record::operator!=(const Record& other) const
+{
+	return (this->operator!=(other.name));
+}
+
+bool Record::operator<(const Record& other) const
+{
+	return (this->operator<(other.name));
+}
+
+bool Record::operator<=(const Record& other) const
+{
+	return (this->operator<=(other.name));
+}
+
+bool Record::operator>(const Record& other) const
+{
+	return (this->operator>(other.name));
+}
+
+bool Record::operator>=(const Record& other) const
+{
+	return (this->operator>=(other.name));
+}
+
+bool operator==(const string& str, const Record& record)
+{
+	return (record.operator==(str));
+}
+
+bool operator!=(const string& str, const Record& record)
+{
+	return (record.operator!=(str));
+}
+
+bool operator<(const string& str, const Record& record)
+{
+	return (record.operator>=(str));
+}
+
+bool operator<=(const string& str, const Record& record)
+{
+	return (record.operator>(str));
+}
+
+bool operator>(const string& str, const Record& record)
+{
+	return (record.operator<=(str));
+}
+
+bool operator>=(const string& str, const Record& record)
+{
+	return (record.operator<(str));
+}
+
+#pragma endregion

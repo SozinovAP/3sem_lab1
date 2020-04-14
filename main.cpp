@@ -8,6 +8,8 @@ using namespace std;
 
 int main()
 {
+	setlocale(LC_ALL, "ru");
+
 	TableManager tableManager;
 	TableTreeAVL ta;
 	tableManager.AddTable(&ta);
