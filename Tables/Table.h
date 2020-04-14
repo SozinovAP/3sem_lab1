@@ -17,7 +17,30 @@ public:
 	Record(std::string name, Polynomial polynomial);
 	virtual Record* GetNext();
 	std::string GetName() const;
+
+	bool operator==(const string& other) const;
+	bool operator!=(const string& other) const;
+	bool operator<(const string& other) const;
+	bool operator<=(const string& other) const;
+	bool operator>(const string& other) const;
+	bool operator>=(const string& other) const;
+
+	bool operator==(const Record& other) const;
+	bool operator!=(const Record& other) const;
+	bool operator<(const Record& other) const;
+	bool operator<=(const Record& other) const;
+	bool operator>(const Record& other) const;
+	bool operator>=(const Record& other) const;
+
+	friend bool operator==(const string& str, const Record& record);
+	friend bool operator!=(const string& str, const Record& record);
+	friend bool operator<(const string& str, const Record& record);
+	friend bool operator<=(const string& str, const Record& record);
+	friend bool operator>(const string& str, const Record& record);
+	friend bool operator>=(const string& str, const Record& record);
 };
+
+
 
 class Table
 {
