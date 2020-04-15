@@ -205,7 +205,7 @@ Visual::Visual(TableManager& tableManager)
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-
+	//setlocale(LC_ALL, "rus");
 	//console.Window(120, 50);
 	consoleSize = console.GetWindowSize();
 

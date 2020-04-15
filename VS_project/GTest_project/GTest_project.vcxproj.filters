@@ -22,6 +22,18 @@
     <ClCompile Include="..\..\Tests\test_TableTreeAVL.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Tables\ArraySortTable.cpp">
+      <Filter>External Files\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Tables\HashTableList.cpp">
+      <Filter>External Files\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Tests\test_ArraySortTable.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Tests\test_HashTableList.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External Files">
@@ -33,5 +45,14 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{dd75ea5a-1d4c-4a10-9f6b-61f459e6ebc4}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GTest_project.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
