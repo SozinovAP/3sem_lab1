@@ -45,6 +45,12 @@
     <ClCompile Include="..\Visual\Visual.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\Tables\ArraySortTable.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Tables\HashTableList.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Tables\Table.h">
@@ -73,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="..\Visual\Visual.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Tables\ArraySortTable.h">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Tables\HashTableList.h">
+      <Filter>Файлы заголовков\Tables</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
