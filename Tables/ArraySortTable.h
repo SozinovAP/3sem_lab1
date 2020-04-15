@@ -4,6 +4,7 @@
 #include "Table.h"
 
 const int step = 10;
+
 class ArraySortTable : public Table
 {
 private:

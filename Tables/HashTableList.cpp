@@ -3,10 +3,8 @@
 
 HashTableList::HashTableList(int msize) : Table()
 {
-	curList = 0;
-	listPos = 0;
 	size = msize;
-	mas = new list<Record>[size];
+	mas = new list<RecordHash>[size];
 }
 
 HashTableList::~HashTableList()
@@ -28,14 +26,11 @@ int HashTableList::hash(std::string name)	//вычисление хеша
 
 Record* HashTableList::FindRecord(std::string name)	//поиск записи
 {
-	Polynomial p;
-	Record rec(name, p);
-
 	int i = hash(name);	//индекс
-	list<Record>::iterator it = mas[i].begin();
+	list<RecordHash>::iterator it = mas[i].begin();
 	while(it != mas[i].end())
 	{
-		if (*it == rec)
+		if (*it == name)
 			return &(*it);
 		++it;
 	}
@@ -43,16 +38,17 @@ Record* HashTableList::FindRecord(std::string name)	//поиск записи
 }
 
 void HashTableList::Insert(std::string name, Polynomial& polynomial)	//вставка
-{
-	Record rec(name, polynomial);
-	
+{	
 	if (FindRecord(name) != nullptr)
 	{
 		throw "Item already exists";
 	}
 	
 	int i = hash(name);
+	RecordHash rec(name, polynomial, this, i);
 	mas[i].emplace_back(rec);
+	list<RecordHash>::iterator it(--mas[i].end());
+	(*it).listIterator = it;
 	DataCount++;
 }
 
@@ -68,10 +64,7 @@ void HashTableList::Remove(std::string name)	//удаление
 		throw "Item doesn't exists";
 	}
 
-	Polynomial pol;
-	
-	Record rec(name, pol);
-	mas[i].erase(find(mas[i].begin(), mas[i].end(), rec));
+	mas[i].erase(find(mas[i].begin(), mas[i].end(), name));
 	DataCount--;
 }
 
@@ -79,7 +72,7 @@ void HashTableList::Clear()	//очистка таблицы
 {
 	delete[] mas;
 	DataCount = 0;
-	mas = new list<Record>[DataCount];
+	mas = new list<RecordHash>[size];
 }
 
 Table::iterator HashTableList::begin()
@@ -89,28 +82,18 @@ Table::iterator HashTableList::begin()
 	{
 		if (!mas[i].empty())
 		{
-			curList = i;
-			listPos = 0;
-			return &(*mas[i].begin());
+			iterator tmp(mas[i].begin().operator->());
+			return tmp;
 		}
 		++i;
 	}
-	curList = size - 1;
-	listPos = mas[size - 1].size() - 1;
-	return &(*mas[size - 1].end());
+	return end();
 }
 
 Table::iterator HashTableList::end()
 {
-	int i = size - 1;
-	while ((i >= 0))
-	{
-		if (!mas[i].empty())
-		{
-			return &(*mas[i].end());
-		}
-
-		--i;
-	}
-	return &(*mas[size - 1].end());
+	//iterator tmp(mas[size - 1].end().operator->());
+	iterator tmp(nullptr);
+	return tmp;
 }
+

@@ -10,10 +10,60 @@ using namespace std;
 class HashTableList : public Table
 {
 private:
-	list<Record>* mas;
+	class RecordHash : public Record
+	{
+	private:
+		HashTableList* ptr;
+		int listPos;
+
+	public:
+		list<RecordHash>::iterator listIterator;
+		RecordHash() : Record()
+		{
+			ptr = nullptr;
+			listPos = -1;
+		}
+
+		RecordHash(std::string name, Polynomial polynomial, HashTableList* ptr, int listPos) : Record(name, polynomial)
+		{
+			this->ptr = ptr;
+			this->listPos = listPos;
+		}
+
+		Record* GetNext() override
+		{
+			list<RecordHash>::iterator nextIter = listIterator;
+			nextIter++;
+
+			list<RecordHash>* ourList = ptr->mas + listPos;
+			if (nextIter == ourList->end())
+			{
+				int nextpos;
+				for (nextpos = listPos + 1; nextpos < ptr->size; ++nextpos)
+				{
+					if (!(ptr->mas + nextpos)->empty())
+					{
+						break;
+					}
+				}
+				if (nextpos == ptr->size)
+				{
+					return nullptr;
+					//nextIter = ptr->mas[ptr->size - 1].end();
+				}
+				else
+				{
+					nextIter = ptr->mas[nextpos].begin();
+				}
+			}
+			return nextIter.operator->();
+		}
+
+		friend class HashtableList;
+	};
+	list<RecordHash>* mas;
 	int size;
-	int curList;
-	int listPos;
+	
 	int hash(std::string name);	//вычисление хеша
 
 public:
@@ -28,8 +78,8 @@ public:
 	void Clear() override;	//очистка таблицы
 
 	//итераторы
-	iterator begin();
-	iterator end();
+	iterator begin() override;
+	iterator end() override;
 
 };
 

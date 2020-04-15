@@ -200,9 +200,8 @@ void ArraySortTable::Remove(std::string name)	//удаление
 void ArraySortTable::Clear()	//очистить таблицу
 {
 	delete[] mas;
-	MaxSize = 0;
 	DataCount = 0;
-	mas = new Record[DataCount];
+	mas = new Record[MaxSize];
 }
 
 Table::iterator ArraySortTable::begin()
