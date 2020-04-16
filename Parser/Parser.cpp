@@ -128,6 +128,7 @@ bool Parser::BalanceParentheses(list<Phrase> listPhrase)
 void Parser::Parse(string str, Table* manager)
 {
 	Formula formula(str);
+	string res;
 	list<Phrase> listPhrases = formula.Parse();
 	for (auto it = listPhrases.begin(); it != listPhrases.end(); ++it)
 		cout << (*it).str << endl;
@@ -137,7 +138,7 @@ void Parser::Parse(string str, Table* manager)
 	int countSigh = 0;
 	while ((it != listPhrases.end()) && (Flag))
 	{
-		if (it->str == "=")
+		if (it->str == "=")	//если находим =, смотрим, были ли операторы слева
 		{
 			Flag = false;
 		}
@@ -145,11 +146,25 @@ void Parser::Parse(string str, Table* manager)
 		{
 			countSigh++;
 		}
-		++it;
-		if (it->str == "integral")
+		else if (it->str == "integral") //если находим интеграл, копируем элементы до него 
 		{
-			
+			list<Phrase> tmp;
+			for (auto iter = listPhrases.begin(); iter != it; ++it)
+			{
+				tmp.emplace_back(*iter);
+			}
+			res = Int(tmp, listPhrases.back().str);
 		}
+		if (it->str == "derivative") //если находим производную, копируем элементы до нее
+		{
+			list<Phrase> tmp;
+			for (auto iter = listPhrases.begin(); iter != it; ++it)
+			{
+				tmp.emplace_back(*iter);
+			}
+			res = Dif(tmp, listPhrases.back().str);
+		}
+		++it;
 	}
 	//если есть знак "="
 	if (!Flag)
@@ -260,7 +275,7 @@ string Parser::Calculate(list<Phrase> postfixPhrases, Table* manager)
 	return str;
 }
 
-string Parser::Dif(list<Phrase> phrase, char x)
+string Parser::Dif(list<Phrase> phrase, string x)
 {
 	string res = "";
 	phrase = ToPostfix(phrase);
@@ -268,7 +283,7 @@ string Parser::Dif(list<Phrase> phrase, char x)
 	return res;
 }
 
-string Parser::Int(list<Phrase> phrase, char x)
+string Parser::Int(list<Phrase> phrase, string x)
 {
 	string res = "";
 	phrase = ToPostfix(phrase);

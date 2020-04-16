@@ -12,6 +12,8 @@ private:
 	static int PriorityOperator(string s);
 	static bool IsOperator(string s);
 	static string Calculate(list<Phrase> postfixPhrases, Table* manager);
+	static string Int(list<Phrase> phrase, string x);
+	static string Dif(list<Phrase> phrase, string x);
 	static void CreateRecord(list<Phrase> listPhrases, Table* manager);
 public:
 	
