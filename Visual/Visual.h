@@ -2,6 +2,7 @@
 #include <string>
 #include "TConsole.h"
 #include "../TableManager.h"
+#include <list>
 
 
 class Visual
@@ -46,6 +47,7 @@ private:
 	int prevPolynomsCount = 0;
 	Vector2i prevMenuPos;
 
+	std::list<std::string> prevInputs;
 public:
 	Visual(TableManager& tableManager);
 	
