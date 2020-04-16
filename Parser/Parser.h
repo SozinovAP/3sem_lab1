@@ -1,24 +1,15 @@
-#ifndef PARSER
-#define PARSER
+#pragma once
 
-#include "Phrase.h"
 #include "Formula.h"
+#include "../TableManager.h"
 
-using namespace std;
-
-class Parser
+static class Parser
 {
 private:
-	string formula;
-	string postfix;
-
+	static string ToPostfix(string);
+	static bool IsFormula(string formula);
+	static string GetFormula(string name);
 public:
-	Parser();
-	Parser(string formula);
-
-	string ToPostfix();
-	bool IsFormula(string formula);
-	string GetFormula(string name);
+	
+	static void Parse(string str, TableManager manager);
 };
-
-#endif PARSER

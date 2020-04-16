@@ -60,6 +60,9 @@
     <ClCompile Include="..\Parser\Parser.cpp">
       <Filter>Исходные файлы\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\Parser\Phrase.cpp">
+      <Filter>Исходные файлы\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Tables\Table.h">
