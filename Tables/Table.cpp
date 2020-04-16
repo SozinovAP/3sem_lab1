@@ -153,22 +153,22 @@ bool operator!=(const string& str, const Record& record)
 
 bool operator<(const string& str, const Record& record)
 {
-	return !(record.operator>=(str));
+	return (record.operator>(str));
 }
 
 bool operator<=(const string& str, const Record& record)
 {
-	return !(record.operator>(str));
+	return (record.operator>=(str));
 }
 
 bool operator>(const string& str, const Record& record)
 {
-	return !(record.operator<=(str));
+	return (record.operator<(str));
 }
 
 bool operator>=(const string& str, const Record& record)
 {
-	return !(record.operator<(str));
+	return (record.operator<=(str));
 }
 
 #pragma endregion

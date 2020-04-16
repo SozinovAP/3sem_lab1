@@ -67,7 +67,7 @@ void TableList::Insert(std::string name, Polynomial& rec)
 	RecordList* curRecord = first;
 	RecordList* prevRecord = nullptr;
 
-	while ((curRecord != nullptr) && (name <= *curRecord))
+	while ((curRecord != nullptr) && (name >= *curRecord))
 	{
 		prevRecord = curRecord;
 		curRecord = curRecord->GetNext();
