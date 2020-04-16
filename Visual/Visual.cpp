@@ -31,6 +31,9 @@ string Visual::InputStr(string info, bool goBack=false)
 	int startX = console.WhereX();
 
 	string result = "";
+	
+	int tabNumOfClick = 0;
+	string tabPart = "";
 
 	while (true)
 	{
@@ -72,8 +75,29 @@ string Visual::InputStr(string info, bool goBack=false)
 			string leftStr = result.substr(0, curPos);
 			int argNum = count(leftStr.begin(), leftStr.end(), ' ') + 1;
 			int argStart = leftStr.find_last_of(' ') + 1;
-
 			string arg = result.substr(argStart, curPos - argStart);
+
+			if (tabNumOfClick==0)
+			{
+				tabPart = arg;
+			}
+			string newStr = tableManager.FindNameByPart(tabPart, tabNumOfClick);
+
+			if (newStr == "")
+			{
+				tabNumOfClick = 0;
+				newStr = tableManager.FindNameByPart(tabPart, tabNumOfClick);
+			}
+
+			if (newStr != "")
+			{
+				result.replace(argStart, arg.length(), newStr);
+				console.GotoXY(startX+argStart, console.WhereY());
+				console.ClrEol();
+				cout << result.substr(argStart);
+				tabNumOfClick++;
+			}
+			continue;
 		}
 		else if (input == KEY_ENTER)
 		{
@@ -111,6 +135,7 @@ string Visual::InputStr(string info, bool goBack=false)
 			cout << result.substr(insertPos);
 			console.GotoXY(whereX + 1, console.WhereY());
 		}
+		tabNumOfClick = 0;
 	}
 	
 	throw "Must not be there";
@@ -205,7 +230,7 @@ Visual::Visual(TableManager& tableManager)
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	//setlocale(LC_ALL, "rus");
+
 	//console.Window(120, 50);
 	consoleSize = console.GetWindowSize();
 
