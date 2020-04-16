@@ -2,24 +2,28 @@
 #include "Tables/Table.h"
 #include "List.h"
 
-class TableManager
+class TableManager: public Table
 {
 private:
 	TList<Table*> tables;
 
+	Record* FindRecord(std::string name) override;
 public:
 
-	void Insert(std::string name, Polynomial& rec);
-	void Remove(std::string name);
-	void Clear();
+	void Insert(std::string name, Polynomial& rec) override;
+	void Remove(std::string name) override;
+	void Clear() override;
 
-	int GetCount() const;
-	Polynomial* Find(std::string name);
-	void Replace(std::string name, Polynomial& polynomial);
-	bool IsEmpty() const;
+	int GetCount() const override;
+	Polynomial* Find(std::string name) override;
+	void Replace(std::string name, Polynomial& polynomial) override;
+	bool IsEmpty() const override;
 
-	void Read(std::string pFileName);
-	void Write(std::string pFileName);
+	iterator begin() override;
+	iterator end() override;
+
+	void Read(std::string pFileName) override;
+	void Write(std::string pFileName) override;
 
 	std::string FindNameByPart(std::string str, int num);
 	void AddTable(Table* table);

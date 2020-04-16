@@ -1,4 +1,5 @@
 #include "Table.h"
+#include "../Parser/Parser.h"
 
 using namespace std;
 
@@ -60,11 +61,16 @@ void Table::Read(string pFileName)
 	{
 		while (!file.eof())
 		{
-			//TODO: чтение из файла 
+			string str;
+			getline(file, str);
+			Parser::Parse(str, this);
 		}
 		file.close();
 	}
-	else cout << "File does not exist" << endl;
+	else
+	{
+		throw "File does not exist";
+	}
 }
 
 void Table::Write(string pFileName)
