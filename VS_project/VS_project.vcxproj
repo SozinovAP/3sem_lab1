@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\Monomial.cpp" />
+    <ClCompile Include="..\Parser\Parser.cpp" />
     <ClCompile Include="..\Polynomial.cpp" />
     <ClCompile Include="..\TableManager.cpp" />
     <ClCompile Include="..\Tables\ArraySortTable.cpp" />
@@ -152,6 +153,9 @@
   <ItemGroup>
     <ClInclude Include="..\List.h" />
     <ClInclude Include="..\Monomial.h" />
+    <ClInclude Include="..\Parser\Formula.h" />
+    <ClInclude Include="..\Parser\Parser.h" />
+    <ClInclude Include="..\Parser\Phrase.h" />
     <ClInclude Include="..\Polynomial.h" />
     <ClInclude Include="..\TableManager.h" />
     <ClInclude Include="..\Tables\ArraySortTable.h" />
