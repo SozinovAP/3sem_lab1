@@ -143,7 +143,7 @@ Record* ArraySortTable::FindRecord(std::string name)	//поиск записи
 	return FindRecord(name, 0, DataCount - 1);
 }
 
-string ArraySortTable::GetName(int pos)	//получить имя
+std::string ArraySortTable::GetName(int pos)	//получить имя
 {
 	if ((pos < 0) || (pos > DataCount - 1))
 		throw "uncorrect position";

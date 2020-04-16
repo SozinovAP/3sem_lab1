@@ -105,7 +105,7 @@ Table::iterator TableManager::end()
 void TableManager::Read(std::string pFileName)
 {
 	int lastPointPos = pFileName.find_last_of('.');
-	string extention = ".txt";
+	std::string extention = ".txt";
 	if (lastPointPos != -1)
 	{
 		extention = lastPointPos == -1 ? ".txt" : pFileName.substr(lastPointPos);
@@ -113,7 +113,7 @@ void TableManager::Read(std::string pFileName)
 	}
 	for (int i = 0; i < tables.GetLength(); i++)
 	{
-		string className = typeid(*tables.Get(i)).name();
+		std::string className = typeid(*tables.Get(i)).name();
 		className.replace(className.find("class "), 6, "");
 		tables.Get(i)->Read(pFileName + "." + className + extention);
 	}
@@ -122,7 +122,7 @@ void TableManager::Read(std::string pFileName)
 void TableManager::Write(std::string pFileName)
 {
 	int lastPointPos = pFileName.find_last_of('.');
-	string extention = ".txt";
+	std::string extention = ".txt";
 	if (lastPointPos != -1)
 	{
 		extention = lastPointPos == -1 ? ".txt" : pFileName.substr(lastPointPos);
@@ -130,7 +130,7 @@ void TableManager::Write(std::string pFileName)
 	}
 	for (int i = 0; i < tables.GetLength(); i++)
 	{
-		string className = typeid(*tables.Get(i)).name();
+		std::string className = typeid(*tables.Get(i)).name();
 		className.replace(className.find("class "), 6, "");
 		tables.Get(i)->Write(pFileName + "." + className + extention);
 	}
@@ -147,7 +147,7 @@ std::string TableManager::FindNameByPart(std::string str, int num)
 	int i = 0;
 	for (auto it = table->begin(); it != table->end(); it++)
 	{
-		string pName = (*it).GetName();
+		std::string pName = (*it).GetName();
 		if (str=="" || pName.find(str) == 0)
 		{
 			if (i == num)
