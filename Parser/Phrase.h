@@ -17,6 +17,7 @@ enum class SignType
 	bracketopen,
 	bracketclose,
 	integral,
+	derivative,
 	signsCount
 };
 

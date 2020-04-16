@@ -21,10 +21,11 @@ public:
 	}
 	list<Phrase> Parse()
 	{
-		string str = inputFormula;
-
+		AddZero();
 		list<Phrase> phrases;
-
+		cout << inputFormula << endl;
+		string str = inputFormula;
+		
 		string prevPhrase;
 		for (int i = 0; i < str.length(); i++)
 		{
@@ -69,5 +70,32 @@ public:
 		
 		return phrases;
 	}
-
+	void AddZero()
+	{
+		string tmp = "";
+		int i = 0;
+		if (inputFormula[i] == '-')
+		{
+			tmp += "0-";
+			i++;
+		}
+		else if (inputFormula[i] == '+')
+		{
+			i++;
+		}
+		while (i < inputFormula.length())
+		{
+			if ((inputFormula[i] == '-') && (inputFormula[i - 1] == '('))
+			{
+				tmp += "0-";
+				i++;
+			}
+			else if ((inputFormula[i] == '+') && (inputFormula[i - 1] == '('))
+			{
+				i++;
+			}
+			tmp += inputFormula[i++];
+		}
+		inputFormula = tmp;
+	}
 };

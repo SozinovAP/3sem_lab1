@@ -74,7 +74,7 @@ list<Phrase> Parser::ToPostfix(list<Phrase> listPhrase)
 bool Parser::BalanceParentheses(list<Phrase> listPhrase)
 {
 	if (listPhrase.empty())
-		throw "list is empty";
+		throw "phrase is empty";
 	stack<char> check;
 	auto it = listPhrase.begin();
 	//поиск 1-ой скобки, если она закрывающаяся, то расстановка не корректна
@@ -125,11 +125,45 @@ bool Parser::BalanceParentheses(list<Phrase> listPhrase)
 	return (count == 0) ? true : false;
 }
 
-void Parser::Parse(string str, TableManager manager)
+void Parser::Parse(string str, Table* manager)
 {
 	Formula formula(str);
 	list<Phrase> listPhrases = formula.Parse();
-	list<Phrase> postfixPhrase = Parser::ToPostfix(listPhrases);
+	for (auto it = listPhrases.begin(); it != listPhrases.end(); ++it)
+		cout << (*it).str << endl;
+	//проверка на существование знака '=', интеграла или дифференциала
+	auto it = listPhrases.begin();
+	bool Flag = true;
+	int countSigh = 0;
+	while ((it != listPhrases.end()) && (Flag))
+	{
+		if (it->str == "=")
+		{
+			Flag = false;
+		}
+		else if (IsOperator(it->str))
+		{
+			countSigh++;
+		}
+		++it;
+		if (it->str == "integral")
+		{
+			
+		}
+	}
+	//если есть знак "="
+	if (!Flag)
+	{
+		//если перед "=" есть операторы +-*/
+		if (countSigh > 0)
+			throw "uncorrect";
+		CreateRecord(listPhrases, manager);
+	}
+	else
+	{
+		list<Phrase> postfixPhrase = ToPostfix(listPhrases);
+	}
+	
 }
 
 int Parser::PriorityOperator(string s)
@@ -160,8 +194,108 @@ bool Parser::IsOperator(string s)
 	return (oper.find(s) == -1) ? false : true;
 }
 
-void Parser::Calculate(list<Phrase> postfixPhrases)
+string Parser::Calculate(list<Phrase> postfixPhrases, Table* manager)
 {
-	
+	string str = "";
+	bool F = true;
+	stack<Polynomial> tmpOperand;
+	Polynomial tmp;
+	auto it = postfixPhrases.begin();
+	while ((++it) != postfixPhrases.end())
+	{
+		if (IsOperator(it->str))
+		{
+			bool Oper1find = false;
+			bool Oper2find = false;
+			Polynomial Oper1, Oper2;
+			if (!tmpOperand.empty())
+			{
+				
+				Oper2 = *manager->Find(tmpOperand.top().ToStr());;
+				tmpOperand.pop();
+				Oper2find = true;
+			}
+			if (!tmpOperand.empty())
+			{
+				Oper1 = *manager->Find(tmpOperand.top().ToStr());;
+				tmpOperand.pop();
+				Oper1find = true;
+			}
+			if (!(Oper1find && Oper2find))
+				throw "False";
+			if(it->str == "+")
+			{
+				tmp = Oper1 + Oper2;
+			}
+			else if(it->str == "-")
+			{
+				tmp = Oper1 - Oper2;
+			}
+			else if (it->str == "*")
+			{
+				//tmp = Oper1 * Oper2;
+			}
+			tmpOperand.push(tmp);
+		}
+	}
+	Polynomial* pol = manager->Find(it->str);
+	if (pol == nullptr)
+	{
+		if (IsOperator(it->str))
+		{
+			postfixPhrases.emplace_back(*it);
+		}
+		else
+		{
+			try
+			{
+				Polynomial pol2(it->str);
+			}
+			catch (...)
+			{
+				throw "cannot be converted to polynomial and no entry in the table";
+			}
+		}
+	}
+	return str;
 }
 
+string Parser::Dif(list<Phrase> phrase, char x)
+{
+	string res = "";
+	phrase = ToPostfix(phrase);
+	
+	return res;
+}
+
+string Parser::Int(list<Phrase> phrase, char x)
+{
+	string res = "";
+	phrase = ToPostfix(phrase);
+
+	return res;
+}
+
+void Parser::CreateRecord(list<Phrase> listPhrases, Table* manager)
+{
+	list<Phrase> phrase;
+	string name = "";
+	auto it = listPhrases.begin();
+	while (it->str != "=")
+	{
+		name += it->str;
+		name += " ";
+		++it;
+	}
+
+	while((++it) != listPhrases.end())
+	{
+		phrase.emplace_back(*it);
+	}
+	
+	phrase = ToPostfix(phrase);
+	string poly = Calculate(phrase, manager);
+	Polynomial p(poly);
+	
+	manager->Insert(name, p);
+}
