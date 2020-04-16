@@ -128,10 +128,8 @@ bool Parser::BalanceParentheses(list<Phrase> listPhrase)
 void Parser::Parse(string str, Table* manager)
 {
 	Formula formula(str);
-	string res;
+	string res;//строка с результатом
 	list<Phrase> listPhrases = formula.Parse();
-	for (auto it = listPhrases.begin(); it != listPhrases.end(); ++it)
-		cout << (*it).str << endl;
 	//проверка на существование знака '=', интеграла или дифференциала
 	auto it = listPhrases.begin();
 	bool Flag = true;
@@ -141,6 +139,15 @@ void Parser::Parse(string str, Table* manager)
 		if (it->str == "=")	//если находим =, смотрим, были ли операторы слева
 		{
 			Flag = false;
+			if (countSigh > 0)
+				throw "uncorrect";
+			list<Phrase> tmp;
+			for(auto iter = ++it; iter != listPhrases.begin(); ++it)
+			{
+				tmp.emplace_back(*iter);
+			}
+			tmp = ToPostfix(tmp);
+			res = Calculate(tmp, manager);
 		}
 		else if (IsOperator(it->str))
 		{
@@ -148,37 +155,34 @@ void Parser::Parse(string str, Table* manager)
 		}
 		else if (it->str == "integral") //если находим интеграл, копируем элементы до него 
 		{
+			Flag = false;
 			list<Phrase> tmp;
 			for (auto iter = listPhrases.begin(); iter != it; ++it)
 			{
 				tmp.emplace_back(*iter);
 			}
+			tmp = ToPostfix(tmp);
 			res = Int(tmp, listPhrases.back().str);
 		}
 		if (it->str == "derivative") //если находим производную, копируем элементы до нее
 		{
+			Flag = false;
 			list<Phrase> tmp;
 			for (auto iter = listPhrases.begin(); iter != it; ++it)
 			{
 				tmp.emplace_back(*iter);
 			}
+			tmp = ToPostfix(tmp);
 			res = Dif(tmp, listPhrases.back().str);
 		}
 		++it;
 	}
-	//если есть знак "="
-	if (!Flag)
-	{
-		//если перед "=" есть операторы +-*/
-		if (countSigh > 0)
-			throw "uncorrect";
-		CreateRecord(listPhrases, manager);
-	}
-	else
+
+	if (Flag)	//если не нашли =, интеграла и производной, просто вычисляем
 	{
 		list<Phrase> postfixPhrase = ToPostfix(listPhrases);
+		res = Calculate(postfixPhrase, manager);
 	}
-	
 }
 
 int Parser::PriorityOperator(string s)
