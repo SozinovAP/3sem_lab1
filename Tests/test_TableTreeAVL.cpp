@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "../Tables/TableTreeAVL.h"
 
+using namespace std;
+
 TEST(TableTreeAVL, tt_default_constructor)
 {
     ASSERT_NO_THROW(TableTreeAVL tt);

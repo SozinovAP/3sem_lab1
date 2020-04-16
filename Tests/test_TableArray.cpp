@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "../Tables/TableArray.h"
 
+using namespace std;
+
 TEST(TableArray, ta_default_constructor)
 {
     ASSERT_NO_THROW(TableArray ta);

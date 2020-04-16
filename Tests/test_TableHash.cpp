@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "../Tables/TableHash.h"
 
+using namespace std;
+
 TEST(TableHash, th_default_constructor)
 {
     ASSERT_NO_THROW(TableHash th);

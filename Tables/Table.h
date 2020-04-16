@@ -1,6 +1,4 @@
-#ifndef TABLE_H
-#define TABLE_H
-
+#pragma once
 #include <string>
 #include <fstream>
 #include "../Polynomial.h"
@@ -18,12 +16,12 @@ public:
 	virtual Record* GetNext();
 	std::string GetName() const;
 
-	bool operator==(const string& other) const;
-	bool operator!=(const string& other) const;
-	bool operator<(const string& other) const;
-	bool operator<=(const string& other) const;
-	bool operator>(const string& other) const;
-	bool operator>=(const string& other) const;
+	bool operator==(const std::string& other) const;
+	bool operator!=(const std::string& other) const;
+	bool operator<(const std::string& other) const;
+	bool operator<=(const std::string& other) const;
+	bool operator>(const std::string& other) const;
+	bool operator>=(const std::string& other) const;
 
 	bool operator==(const Record& other) const;
 	bool operator!=(const Record& other) const;
@@ -32,12 +30,12 @@ public:
 	bool operator>(const Record& other) const;
 	bool operator>=(const Record& other) const;
 
-	friend bool operator==(const string& str, const Record& record);
-	friend bool operator!=(const string& str, const Record& record);
-	friend bool operator<(const string& str, const Record& record);
-	friend bool operator<=(const string& str, const Record& record);
-	friend bool operator>(const string& str, const Record& record);
-	friend bool operator>=(const string& str, const Record& record);
+	friend bool operator==(const std::string& str, const Record& record);
+	friend bool operator!=(const std::string& str, const Record& record);
+	friend bool operator<(const std::string& str, const Record& record);
+	friend bool operator<=(const std::string& str, const Record& record);
+	friend bool operator>(const std::string& str, const Record& record);
+	friend bool operator>=(const std::string& str, const Record& record);
 };
 
 
@@ -89,5 +87,3 @@ public:
 	virtual void Write(std::string pFileName);						//запись в файла
 
 };
-
-#endif TABLE_H

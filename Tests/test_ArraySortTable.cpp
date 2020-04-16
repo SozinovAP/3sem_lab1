@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "../Tables/ArraySortTable.h"
 
+using namespace std;
 
 TEST(ArraySortTable, can_default_constructor)
 {

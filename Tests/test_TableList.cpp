@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "../Tables/TableList.h"
 
+using namespace std;
+
 TEST(TableList, tl_default_constructor)
 {
 	ASSERT_NO_THROW(TableList tl);

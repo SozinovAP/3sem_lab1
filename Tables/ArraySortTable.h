@@ -27,7 +27,7 @@ public:
 	ArraySortTable(int _MaxSize = 10);
 	~ArraySortTable();
 
-	string GetName(int pos);			//получить имя
+	std::string GetName(int pos);			//получить имя
 
 	void Insert(std::string name, Polynomial& polynomial) override;	//вставка
 	void Remove(std::string name) override;	//удаление
