@@ -13,7 +13,7 @@ Polynomial::Polynomial(const TList<Monomial> &mon)
 	monomials = mon;
 }
 
-Polynomial::Polynomial(Polynomial & p)
+Polynomial::Polynomial(const Polynomial & p)
 {
 	monomials = TList<Monomial>(p.monomials);
 }
@@ -70,7 +70,7 @@ Polynomial::Polynomial(string s)
 	this->Sort();
 }
 
-Polynomial& Polynomial::operator-(Polynomial& p)
+Polynomial& Polynomial::operator-(const Polynomial& p) const
 {
 	Polynomial *res = new Polynomial(p);
 	for (int i = 0; i < (*res).monomials.GetLength(); i++)
@@ -82,25 +82,49 @@ Polynomial& Polynomial::operator-(Polynomial& p)
 	return *res;
 }
 
-Polynomial& Polynomial::operator+(Polynomial & p)
+Polynomial& Polynomial::operator+(const Polynomial & p) const
 {
-	Polynomial *res = new Polynomial(p);
+	Polynomial* res = new Polynomial(p);
 
 	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		(*res) += monomials[i];
+		*res += monomials[i];
 	}
 	return *res;
 }
 
-Polynomial& Polynomial::operator=(Polynomial & p)
+Polynomial& Polynomial::operator*(const Polynomial& p) const
+{
+	Polynomial* res = new Polynomial();
+	for (int i = 0; i < monomials.GetLength(); i++)
+	{
+		Polynomial t = p * monomials[i];
+		*res = *res + t;
+
+	}
+	res->Sort();
+	return *res;
+}
+
+Polynomial& Polynomial::operator*(const Monomial& m) const
+{
+	Polynomial* res = new Polynomial(*this);
+	for (int i = 0; i < res->monomials.GetLength(); i++)
+	{
+		res->monomials[i].SetPowers(res->monomials[i].GetPowers() + m.GetPowers());
+		res->monomials[i].SetCoef(res->monomials[i].GetCoef() * m.GetCoef());
+	}
+	return *res;
+}
+
+Polynomial& Polynomial::operator=(const Polynomial & p)
 {
 	monomials = TList<Monomial>(p.monomials);
 	this->Sort();
 	return *this;
 }
 
-bool Polynomial::operator==(Polynomial & p)
+bool Polynomial::operator==(const Polynomial & p) const
 {
 	if (monomials.GetLength() != p.monomials.GetLength())
 		return false;
@@ -113,7 +137,7 @@ bool Polynomial::operator==(Polynomial & p)
 	return true;
 }
 
-bool Polynomial::operator!=(Polynomial & p)
+bool Polynomial::operator!=(const Polynomial & p) const
 {
 	if (monomials.GetLength() != p.monomials.GetLength())
 		return true;
