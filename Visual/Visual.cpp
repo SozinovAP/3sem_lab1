@@ -35,6 +35,9 @@ string Visual::InputStr(string info, bool goBack=false)
 	int tabNumOfClick = 0;
 	string tabPart = "";
 
+	string curInput = "";
+	list<string>::iterator itMind = prevInputs.end();
+
 	while (true)
 	{
 		int input = _getch();
@@ -55,6 +58,39 @@ string Visual::InputStr(string info, bool goBack=false)
 				if (whereX < startX+result.length())
 				{
 					console.GotoXY(whereX + 1, console.WhereY());
+				}
+			}
+			else if (arrow == KEY_UP)
+			{
+				if (prevInputs.size() != 0 && itMind != prevInputs.begin())
+				{
+					if (itMind == prevInputs.end())
+					{
+						curInput = result;
+					}
+					itMind--;
+					result = *(itMind);
+					console.GotoXY(startX, console.WhereY());
+					console.ClrEol();
+					cout << result;
+				}
+			}
+			else if (arrow == KEY_DOWN)
+			{
+				if (prevInputs.size() != 0 && itMind != prevInputs.end())
+				{
+					itMind++;
+					if (itMind == prevInputs.end())
+					{
+						result = curInput;
+					}
+					else
+					{
+						result = *(itMind);
+					}
+					console.GotoXY(startX, console.WhereY());
+					console.ClrEol();
+					cout << result;
 				}
 			}
 			else if (arrow == KEY_DELETE)
@@ -112,6 +148,7 @@ string Visual::InputStr(string info, bool goBack=false)
 				console.GotoXY(0, console.WhereY());
 			}
 			UpdateMenu();
+			prevInputs.push_back(result);
 			return result;
 		}
 		else if (input == KEY_BACKSPACE)
