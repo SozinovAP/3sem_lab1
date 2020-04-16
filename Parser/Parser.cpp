@@ -229,7 +229,6 @@ string Parser::Calculate(list<Phrase> postfixPhrases, Table* manager)
 			Polynomial Oper1, Oper2;
 			if (!tmpOperand.empty())
 			{
-				
 				Oper2 = *manager->Find(tmpOperand.top().ToStr());;
 				tmpOperand.pop();
 				Oper2find = true;
@@ -283,7 +282,7 @@ string Parser::Dif(list<Phrase> phrase, string x)
 {
 	string res = "";
 	phrase = ToPostfix(phrase);
-	
+	//!!!
 	return res;
 }
 
@@ -291,7 +290,7 @@ string Parser::Int(list<Phrase> phrase, string x)
 {
 	string res = "";
 	phrase = ToPostfix(phrase);
-
+	//!!!
 	return res;
 }
 
