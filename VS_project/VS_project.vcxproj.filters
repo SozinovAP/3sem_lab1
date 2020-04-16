@@ -63,6 +63,12 @@
     <ClCompile Include="..\Parser\Phrase.cpp">
       <Filter>Исходные файлы\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\Tables\TableHash.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Tables\TableList.cpp">
+      <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Tables\Table.h">
@@ -106,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="..\Parser\Parser.h">
       <Filter>Файлы заголовков\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Tables\TableHash.h">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Tables\TableList.h">
+      <Filter>Файлы заголовков\Tables</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
