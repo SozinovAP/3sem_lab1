@@ -1,10 +1,10 @@
 #include "Parser.h"
 #include <stack>
 
-string Parser::ToPostfix(list<Phrase> listPhrase)
+list<Phrase> Parser::ToPostfix(list<Phrase> listPhrase)
 {
 	stack<Phrase> stackPhrase;
-	string postfix = "";
+	list<Phrase> postfix;
 
 	if (!BalanceParentheses(listPhrase))
 		throw "uncorrect";
@@ -14,14 +14,13 @@ string Parser::ToPostfix(list<Phrase> listPhrase)
 		//cout << (*it).str << endl;
 		if (it->str == "integral")
 		{
-			postfix += "integral ";
+			postfix.emplace_back(*it);
 		}
 		else if ((IsOperator(it->str)) || (it->str == "("))
 		{
 			if(F)
 			{
 				F = false;
-				postfix += " ";
 			}
 			if((stackPhrase.empty()) || (it->str == "("))
 			{
@@ -37,9 +36,8 @@ string Parser::ToPostfix(list<Phrase> listPhrase)
 				{
 					while ((!stackPhrase.empty()) && (Parser::PriorityOperator(stackPhrase.top().str)) >= Parser::PriorityOperator(it->str))
 					{
-						postfix += stackPhrase.top().str;
+						postfix.emplace_back(stackPhrase.top());
 						stackPhrase.pop();
-						postfix += " ";
 					}
 					stackPhrase.push(*it);
 				}
@@ -50,38 +48,27 @@ string Parser::ToPostfix(list<Phrase> listPhrase)
 			if (F)
 			{
 				F = false;
-				postfix += " ";
 			}
 			while (stackPhrase.top().str != "(")
 			{
-				postfix += stackPhrase.top().str;
+				postfix.emplace_back(stackPhrase.top());
 				stackPhrase.pop();
-				postfix += " ";
 			}
 			stackPhrase.pop();
 		}
 		else
 		{
-			postfix += it->str;
+			postfix.emplace_back(*it);
 			F = true;
 		}
 	}
 
-	postfix += " ";
 	while (!stackPhrase.empty())
 	{
-		postfix += stackPhrase.top().str;
+		postfix.emplace_back(stackPhrase.top());
 		stackPhrase.pop();
-		postfix += " ";
 	}
 	return postfix;
-}
-
-
-string Parser::GetFormula(string name)
-{
-	string tmp = "";
-	return tmp;
 }
 
 bool Parser::BalanceParentheses(list<Phrase> listPhrase)
@@ -142,25 +129,29 @@ void Parser::Parse(string str, TableManager manager)
 {
 	Formula formula(str);
 	list<Phrase> listPhrases = formula.Parse();
-	string s = Parser::ToPostfix(listPhrases);
-	for (auto it = listPhrases.begin(); it != listPhrases.end(); ++it)
-	{
-		cout << (*it).str << endl;
-		//if (true)
-	}
-	cout << s;
+	list<Phrase> postfixPhrase = Parser::ToPostfix(listPhrases);
 }
 
 int Parser::PriorityOperator(string s)
 {
 	if (s == "(")
+	{
 		return 0;
+	}
 	else if (s == ")")
+	{
 		return 1;
+	}
 	else if ((s == "+") || (s == "-"))
+	{
 		return 2;
+	}
 	else if ((s == "/") || (s == "*"))
+	{
 		return 3;
+	}
+	else
+		throw "uncorrect symbol";
 }
 
 bool Parser::IsOperator(string s)
@@ -168,3 +159,9 @@ bool Parser::IsOperator(string s)
 	string oper = "+-*/";
 	return (oper.find(s) == -1) ? false : true;
 }
+
+void Parser::Calculate(list<Phrase> postfixPhrases)
+{
+	
+}
+
