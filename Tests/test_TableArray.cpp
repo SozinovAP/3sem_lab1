@@ -147,7 +147,7 @@ TEST(TableArray, ta_clear_works_fine)
 	ASSERT_ANY_THROW(ta.Remove("a"));
 }
 
-TEST(TableArray, ta_iterators_works_fine)
+TEST(TableArray, ta_iterator_begin_and_iterator_end_equal)
 {
 	TableArray ta;
 
@@ -155,7 +155,11 @@ TEST(TableArray, ta_iterators_works_fine)
 	ASSERT_NO_THROW(ta.end());
 
 	ASSERT_TRUE(ta.begin() == ta.end());
+}
 
+TEST(TableArray, ta_iterators_begin_and_end_works_fine)
+{
+	TableArray ta;
 	Polynomial p;
 	string name = "a";
 	ta.Insert(name, p);
@@ -165,9 +169,21 @@ TEST(TableArray, ta_iterators_works_fine)
 	ASSERT_FALSE(ta.begin() == ta.end());
 	ASSERT_TRUE(++ta.begin() == ta.end());
 	ASSERT_EQ((*ta.begin()).GetName(), name);
+}
 
-	ta.Remove("a");
+TEST(TableArray, ta_iterators_operator_increment_works_fine_one_time)
+{
+	TableArray ta;
+	Polynomial p;
+	string name = "a";
+	ta.Insert(name, p);
+	ASSERT_TRUE(++ta.begin() == ta.end());
+}
 
+TEST(TableArray, ta_iterators_operator_increment_works_fine_several_times)
+{
+	TableArray ta;
+	Polynomial p;
 	ASSERT_TRUE(ta.begin() == ta.end());
 
 	const int count = 10;
