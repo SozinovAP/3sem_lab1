@@ -19,6 +19,12 @@
     <Filter Include="Файлы заголовков\Tables">
       <UniqueIdentifier>{f7496cd8-c230-459c-a80a-2c4f8b8cd609}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Parser">
+      <UniqueIdentifier>{e46c3a3a-08d6-49b9-9854-0a50dc8bfa82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Parser">
+      <UniqueIdentifier>{326d8979-97c9-44ed-9303-3d6cead091d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Tables\Table.cpp">
@@ -50,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="..\Tables\HashTableList.cpp">
       <Filter>Исходные файлы\Tables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Parser\Parser.cpp">
+      <Filter>Исходные файлы\Parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="..\Tables\HashTableList.h">
       <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Parser\Formula.h">
+      <Filter>Файлы заголовков\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Parser\Phrase.h">
+      <Filter>Файлы заголовков\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Parser\Parser.h">
+      <Filter>Файлы заголовков\Parser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
