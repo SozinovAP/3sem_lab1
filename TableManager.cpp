@@ -1,6 +1,11 @@
 #include "TableManager.h"
 
 
+Record* TableManager::FindRecord(std::string name)
+{
+	throw "this function deosn't work";
+}
+
 void TableManager::Insert(std::string name, Polynomial& rec)
 {
 	for (int i = 0; i < tables.GetLength(); i++)
@@ -87,9 +92,31 @@ bool TableManager::IsEmpty() const
 	return first;
 }
 
+Table::iterator TableManager::begin()
+{
+	throw "this function deosn't work";
+}
+
+Table::iterator TableManager::end()
+{
+	throw "this function deosn't work";
+}
+
 void TableManager::Read(std::string pFileName)
 {
-	
+	int lastPointPos = pFileName.find_last_of('.');
+	string extention = ".txt";
+	if (lastPointPos != -1)
+	{
+		extention = lastPointPos == -1 ? ".txt" : pFileName.substr(lastPointPos);
+		pFileName = pFileName.substr(0, lastPointPos);
+	}
+	for (int i = 0; i < tables.GetLength(); i++)
+	{
+		string className = typeid(*tables.Get(i)).name();
+		className.replace(className.find("class "), 6, "");
+		tables.Get(i)->Read(pFileName + "." + className + extention);
+	}
 }
 
 void TableManager::Write(std::string pFileName)

@@ -190,7 +190,7 @@ bool Visual::OnMenuPressed()
 			{
 				try
 				{
-					Parser::Parse(str, tableManager);
+					Parser::Parse(str, &tableManager);
 				}
 				catch (const char* msg)
 				{
@@ -220,12 +220,23 @@ bool Visual::OnMenuPressed()
 			string str = InputStr("¬ведите им€ полинома");
 			try
 			{
-				tableManager.Remove(str);
+				try
+				{
+					tableManager.Remove(str);
+				}
+				catch (const char* msg)
+				{
+					throw msg;
+				}
+				catch (...)
+				{
+					throw "Can't remove polynom";
+				}
 			}
-			catch (...)
+			catch (const char* msg)
 			{
 				Vector2i prevPos = console.Where();
-				cout << "Can't remove polynom...";
+				cout << "error: " << msg;
 				console.ReadKey();
 				console.GotoXY(prevPos);
 				console.ClrEol();
@@ -246,7 +257,29 @@ bool Visual::OnMenuPressed()
 	case menus::LoadFromFile:
 		{
 			string str = InputStr("¬ведите им€ файла");
-			tableManager.Read(str);
+			try
+			{
+				try
+				{
+					tableManager.Read(str);
+				}
+				catch (const char* msg)
+				{
+					throw msg;
+				}
+				catch (...)
+				{
+					throw "File doesn't exist";
+				}
+			}
+			catch (const char* msg)
+			{
+				Vector2i prevPos = console.Where();
+				cout << "error: " << msg;
+				console.ReadKey();
+				console.GotoXY(prevPos);
+				console.ClrEol();
+			}
 		}
 		break;
 	case menus::Exit:

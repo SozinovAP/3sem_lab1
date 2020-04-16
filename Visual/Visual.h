@@ -42,8 +42,6 @@ private:
 
 	TableManager tableManager;
 
-	int c = 0;//TODO REMOVE
-
 	int prevPolynomsCount = 0;
 	Vector2i prevMenuPos;
 
