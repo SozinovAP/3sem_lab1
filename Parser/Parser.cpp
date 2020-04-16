@@ -142,12 +142,22 @@ void Parser::Parse(string str, Table* manager)
 			if (countSigh > 0)
 				throw "uncorrect";
 			list<Phrase> tmp;
-			for(auto iter = ++it; iter != listPhrases.begin(); ++it)
+			string name = "";
+			//элементы до итератора - им€
+			for (auto iter = listPhrases.begin(); iter != it; ++it)
+			{
+				name += iter->str;
+			}
+			//элементы после итератора - полином ли выражение, которое нужно вычислить
+			for(auto iter = ++it; iter != listPhrases.end(); ++it)
 			{
 				tmp.emplace_back(*iter);
 			}
+			
 			tmp = ToPostfix(tmp);
 			res = Calculate(tmp, manager);
+			Polynomial pol(res);
+			manager->Insert(name, pol);
 		}
 		else if (IsOperator(it->str))
 		{
@@ -157,6 +167,7 @@ void Parser::Parse(string str, Table* manager)
 		{
 			Flag = false;
 			list<Phrase> tmp;
+			//эдементы до интеграла - выражение, символ после - переменна€, по которой беретс€ интеграл
 			for (auto iter = listPhrases.begin(); iter != it; ++it)
 			{
 				tmp.emplace_back(*iter);
@@ -168,6 +179,7 @@ void Parser::Parse(string str, Table* manager)
 		{
 			Flag = false;
 			list<Phrase> tmp;
+			//эдементы до проиводной - выражение, символ после - переменна€, по которой беретс€ производна€
 			for (auto iter = listPhrases.begin(); iter != it; ++it)
 			{
 				tmp.emplace_back(*iter);
@@ -292,28 +304,4 @@ string Parser::Int(list<Phrase> phrase, string x)
 	phrase = ToPostfix(phrase);
 	//!!!
 	return res;
-}
-
-void Parser::CreateRecord(list<Phrase> listPhrases, Table* manager)
-{
-	list<Phrase> phrase;
-	string name = "";
-	auto it = listPhrases.begin();
-	while (it->str != "=")
-	{
-		name += it->str;
-		name += " ";
-		++it;
-	}
-
-	while((++it) != listPhrases.end())
-	{
-		phrase.emplace_back(*it);
-	}
-	
-	phrase = ToPostfix(phrase);
-	string poly = Calculate(phrase, manager);
-	Polynomial p(poly);
-	
-	manager->Insert(name, p);
 }

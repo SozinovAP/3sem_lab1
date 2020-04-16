@@ -14,7 +14,6 @@ private:
 	static string Calculate(list<Phrase> postfixPhrases, Table* manager);
 	static string Int(list<Phrase> phrase, string x);
 	static string Dif(list<Phrase> phrase, string x);
-	static void CreateRecord(list<Phrase> listPhrases, Table* manager);
 public:
 	
 	static void Parse(string str, Table* manager);
