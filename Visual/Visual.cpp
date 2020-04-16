@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <algorithm>
 #include <math.h>
+#include "../Parser/Parser.h"
 
 #define COMMAND_KEYS 224
 #define KEY_UP 72
@@ -185,13 +186,31 @@ bool Visual::OnMenuPressed()
 	case menus::Formula:
 		{
 			string str = InputStr("¬ведите формулу");
-			//Formula f(str);
-			//f.Parse();
+			try
+			{
+				try
+				{
+					Parser::Parse(str, tableManager);
+				}
+				catch (const char* msg)
+				{
+					throw msg;
+				}
+				catch (...)
+				{
+					throw "Pasing Error";
+				}
+			}
+			catch (const char* msg)
+			{
+				Vector2i prevPos = console.Where();
+				cout << "error: " << msg;
+				console.ReadKey();
+				console.GotoXY(prevPos);
+				console.ClrEol();
+			}
 
-			Polynomial tmp(str);
-			tableManager.Insert(to_string(c++), tmp);
 			UpdateMenu();
-
 			UpdatePolynoms();
 		}
 		break;
@@ -199,11 +218,22 @@ bool Visual::OnMenuPressed()
 
 		{
 			string str = InputStr("¬ведите им€ полинома");
-			tableManager.Remove(str);
+			try
+			{
+				tableManager.Remove(str);
+			}
+			catch (...)
+			{
+				Vector2i prevPos = console.Where();
+				cout << "Can't remove polynom...";
+				console.ReadKey();
+				console.GotoXY(prevPos);
+				console.ClrEol();
+			}
+
 			UpdateMenu();
 
 			UpdatePolynoms();
-			console.GotoXY(console.WhereX(), console.WhereY() - 1);
 		}
 
 		break;
