@@ -1,31 +1,16 @@
 #include "Parser.h"
 
 
-Parser::Parser()
+string Parser::ToPostfix(string)
 {
-	formula = "";
-	postfix = "";
-}
-
-Parser::Parser(string formula)
-{
-	if (IsFormula(formula))
-	{
-		this->formula = formula;
-	}
-	else
-	{
-		this->formula = GetFormula(formula);
-	}
-
-	this->postfix = ToPostfix();	
-}
-	
-
-string Parser::ToPostfix()
-{
-	string tmp = formula;
-	return tmp;
+	//string tmp = formula;
+	//Formula newFormula(formula);
+	/*list<Phrase> phrases = newFormula.Parse();
+	for (auto it = phrases.begin(); it != phrases.end(); ++it)
+		cout << (*it).str;
+	return tmp;*/
+	string str;
+	return str;
 }
 
 bool Parser::IsFormula(string formula)
@@ -38,3 +23,5 @@ string Parser::GetFormula(string name)
 	string tmp = "";
 	return tmp;
 }
+
+void Parser::Parse(string str, TableManager manager) {}

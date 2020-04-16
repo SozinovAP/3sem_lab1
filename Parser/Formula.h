@@ -1,5 +1,5 @@
-#ifndef FORMULA
-#define FORMULA
+#pragma once
+
 #include <string>
 #include "../Polynomial.h"
 #include <list>
@@ -33,7 +33,7 @@ public:
 			bool itsSign = false;
 			std::string signStr;
 
-			for (j = 0; j < (int)SignType::signsCount; j++)
+			for (j = 0; j < static_cast<int>(SignType::signsCount); j++)
 			{
 				signStr = Phrase::signStrs[j];
 				if (str.length()-i >= signStr.length() && str.substr(i, signStr.length()) == signStr)
@@ -71,5 +71,3 @@ public:
 	}
 
 };
-
-#endif FORMULA

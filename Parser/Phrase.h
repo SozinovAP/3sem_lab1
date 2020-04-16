@@ -1,6 +1,4 @@
-#ifndef PHRASE
-#define PHRASE
-
+#pragma once
 #include <string>
 #include "../Monomial.h"
 
@@ -24,7 +22,7 @@ enum class SignType
 
 struct Phrase
 {
-	static const std::string signStrs[(int)SignType::signsCount];
+	static const std::string signStrs[static_cast<int>(SignType::signsCount)];
 
 	PhraseType phraseType;
 	std::string str;
@@ -37,10 +35,4 @@ struct Phrase
 
 };
 
-#ifndef PhraseCpp
-#define PhraseCpp
 
-const std::string Phrase::signStrs[(int)SignType::signsCount] = { "+","-","=","*","(",")","integral" };
-#endif//TODO: !PhraseCpp
-
-#endif PHRASE

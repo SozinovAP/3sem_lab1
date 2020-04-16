@@ -141,6 +141,7 @@
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\Monomial.cpp" />
     <ClCompile Include="..\Parser\Parser.cpp" />
+    <ClCompile Include="..\Parser\Phrase.cpp" />
     <ClCompile Include="..\Polynomial.cpp" />
     <ClCompile Include="..\TableManager.cpp" />
     <ClCompile Include="..\Tables\ArraySortTable.cpp" />
