@@ -21,6 +21,7 @@ public:
 	void Read(std::string pFileName);
 	void Write(std::string pFileName);
 
+	std::string FindNameByPart(std::string str, int num);
 	void AddTable(Table* table);
 	Table* GetTable(int num);
 	int GetTablesCount();

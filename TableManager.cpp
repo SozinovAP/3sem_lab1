@@ -109,6 +109,30 @@ void TableManager::Write(std::string pFileName)
 	}
 }
 
+std::string TableManager::FindNameByPart(std::string str, int num)
+{
+	if (tables.GetLength() == 0)
+	{
+		return "";
+	}
+	
+	Table* table = GetTable(0);
+	int i = 0;
+	for (auto it = table->begin(); it != table->end(); it++)
+	{
+		string pName = (*it).GetName();
+		if (str=="" || pName.find(str) == 0)
+		{
+			if (i == num)
+			{
+				return pName;
+			}
+			i++;
+		}
+	}
+	return "";
+}
+
 void TableManager::AddTable(Table* table)
 {
 	tables.Push_Back(table);
