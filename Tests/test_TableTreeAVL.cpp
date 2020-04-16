@@ -215,7 +215,7 @@ TEST(TableTreeAVL, tt_bigbalance_on_remove_works_fine)
 	ASSERT_EQ(3, tt.GetHeight());
 }
 
-TEST(TableTreeAVL, tt_iterators_works_fine)
+TEST(TableTreeAVL, tt_iterator_begin_and_iterator_end_equal)
 {
 	TableTreeAVL tt;
 
@@ -223,7 +223,11 @@ TEST(TableTreeAVL, tt_iterators_works_fine)
 	ASSERT_NO_THROW(tt.end());
 
 	ASSERT_TRUE(tt.begin() == tt.end());
+}
 
+TEST(TableTreeAVL, tt_iterators_begin_and_end_works_fine)
+{
+	TableTreeAVL tt;
 	Polynomial p;
 	string name = "a";
 	tt.Insert(name, p);
@@ -233,11 +237,21 @@ TEST(TableTreeAVL, tt_iterators_works_fine)
 	ASSERT_FALSE(tt.begin() == tt.end());
 	ASSERT_TRUE(++tt.begin() == tt.end());
 	ASSERT_EQ((*tt.begin()).GetName(), name);
+}
+	
+TEST(TableTreeAVL, tt_iterators_operator_increment_works_fine_one_time)
+{
+	TableTreeAVL tt;
+	Polynomial p;
+	string name = "a";
+	tt.Insert(name, p);
+	ASSERT_TRUE(++tt.begin() == tt.end());
+}
 
-	tt.Remove("a");
-
-	ASSERT_TRUE(tt.begin() == tt.end());
-
+TEST(TableTreeAVL, tt_iterators_works_fine_several_times)
+{
+	TableTreeAVL tt;
+	Polynomial p;
 	const int count = 10;
 	int a[count]{ 1,2,3,6,4,5,7,0,8,9 };
 	for (int i = 0; i < count; i++)

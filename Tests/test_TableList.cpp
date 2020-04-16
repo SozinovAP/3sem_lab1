@@ -195,7 +195,6 @@ TEST(TableList, tl_iterator_works_fine_witl_severals_numbers)
 {
 	Polynomial p;
 	TableList tl;
-	ASSERT_TRUE(tl.begin() == tl.end());
 
 	const int count = 10;
 	int b[count]{ 1,2,3,6,4,5,7,0,8,9 };
