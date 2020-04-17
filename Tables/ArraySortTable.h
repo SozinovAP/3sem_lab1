@@ -12,12 +12,12 @@ private:
 	int MaxSize;
 	Record* mas;
 
-	Record* PFindRecord(std::string name); //поиск записи по имени для вставки
+	Record* FindRecord(std::string name) override; //поиск записи по имени для вставки
 
 	void AddSize();						//увеличить размер массива
 public:
-	Record* FindRecord(std::string name) override;	//поиск записи
-	Record* FindRecord(std::string name, int left, int right);
+	//Record* FindRecord(std::string name) override;	//поиск записи
+	//Record* FindRecord(std::string name, int left, int right);
 
 	void swap(Record* a, Record* b);	//swap записей
 	void Sort(int left, int right);		//сортировка

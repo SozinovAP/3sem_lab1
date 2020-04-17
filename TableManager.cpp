@@ -57,7 +57,10 @@ Polynomial* TableManager::Find(std::string name)
 	Polynomial* first = tables.Get(0)->Find(name);
 	for (int i = 1; i < tables.GetLength(); i++)
 	{
-		if (*first != *tables.Get(i)->Find(name))
+		Polynomial* tmp = tables.Get(i)->Find(name);
+
+		if((first==nullptr xor tmp==nullptr) ||
+		   (first!=nullptr && *first!=*tmp))
 		{
 			throw "Table finds returns not equal values";
 		}

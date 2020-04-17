@@ -163,7 +163,7 @@ std::string Monomial::toStr()
 
 	if (coef != 1)
 	{
-		if (coef == -1)
+		if (coef == -1 && powers>0)
 			s += "-";
 		else
 			s += std::to_string(coef);

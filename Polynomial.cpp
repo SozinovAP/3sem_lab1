@@ -180,7 +180,8 @@ Polynomial& Polynomial::operator+=(const Monomial &m)
 			return *this;
 		}
 	}
-	monomials.Push_Back(m);
+	if(m.GetCoef()!=0)
+		monomials.Push_Back(m);
 	this->Sort();
 	return *this;
 }
@@ -234,8 +235,11 @@ Polynomial Polynomial::Dif(char v)
 	p = pow(100, v);
 	for (int i = 0; i < monomials.GetLength(); i++)
 	{
-		res.monomials[i].SetCoef(res.monomials[i].GetCoef() * (res.monomials[i].GetPowers() / p % 100));
-		res.monomials[i].SetPowers(res.monomials[i].GetPowers() - 1 * pow(100, v));
+		if (res.monomials[i].GetPowers() / p % 100 != 0)
+		{
+			res.monomials[i].SetCoef(res.monomials[i].GetCoef() * (res.monomials[i].GetPowers() / p % 100));
+			res.monomials[i].SetPowers(res.monomials[i].GetPowers() - 1 * pow(100, v));
+		}
 	}
 	return res;
 }
@@ -274,5 +278,10 @@ string Polynomial::ToStr() const
 
 		s += monomials[i].toStr();
 	}
+	if (s == "")
+	{
+		s = "0";
+	}
+
 	return s;
 }
