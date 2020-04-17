@@ -14,7 +14,7 @@ ArraySortTable::~ArraySortTable()
 	delete[] mas;
 }
 
-Record* ArraySortTable::PFindRecord(std::string name) //поиск записи по имени для вставки
+Record* ArraySortTable::FindRecord(std::string name) //поиск записи по имени для вставки
 {
 	Record tmp;
 	int left = 0;
@@ -111,7 +111,7 @@ void ArraySortTable::AddSize()	//увеличить размер массива
 	mas = tmp;
 }
 
-Record* ArraySortTable::FindRecord(std::string name, int left, int right)	//поиск записи
+/*Record* ArraySortTable::FindRecord(std::string name, int left, int right)	//поиск записи
 {
 	Record tmp;
 	int middle = (left + right) / 2;
@@ -136,12 +136,12 @@ Record* ArraySortTable::FindRecord(std::string name, int left, int right)	//поис
 	{
 		return &mas[middle];
 	}
-}
+}*/
 
-Record* ArraySortTable::FindRecord(std::string name)	//поиск записи
+/*Record* ArraySortTable::FindRecord(std::string name)	//поиск записи
 {
 	return FindRecord(name, 0, DataCount - 1);
-}
+}*/
 
 std::string ArraySortTable::GetName(int pos)	//получить имя
 {
@@ -159,7 +159,7 @@ inline bool ArraySortTable::IsFull() //проверка на переполнение
 void ArraySortTable::Insert(std::string name, Polynomial& polynomial)	//вставка
 {
 	if (!IsEmpty())
-		if (PFindRecord(name) != nullptr)
+		if (FindRecord(name) != nullptr)
 		{
 			throw "Item already exists";
 		}
@@ -185,7 +185,7 @@ void ArraySortTable::Remove(std::string name)	//удаление
 	{
 		throw "Table is empty";
 	}
-	if (PFindRecord(name) == nullptr)
+	if (FindRecord(name) == nullptr)
 	{
 		throw "Item doesn't exists";
 	}

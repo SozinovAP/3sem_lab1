@@ -63,7 +63,8 @@ void Table::Read(string pFileName)
 		{
 			string str;
 			getline(file, str);
-			Parser::Parse(str, this);
+			if(str!="")
+				Parser::Parse(str, this);
 		}
 		file.close();
 	}

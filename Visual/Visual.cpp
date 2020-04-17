@@ -198,7 +198,7 @@ bool Visual::OnMenuPressed()
 				}
 				catch (...)
 				{
-					throw "Pasing Error";
+					throw "Parsing Error";
 				}
 			}
 			catch (const char* msg)
@@ -280,6 +280,8 @@ bool Visual::OnMenuPressed()
 				console.GotoXY(prevPos);
 				console.ClrEol();
 			}
+			UpdateMenu();
+			UpdatePolynoms();
 		}
 		break;
 	case menus::Exit:
@@ -364,6 +366,7 @@ void Visual::UpdatePolynoms()
 	{
 		string str = (*it).GetName() + " = " + (*it).polynomial.ToStr();
 		console.GotoXY(tableXPos, i);
+		console.ClrEol();
 		if (i+1 == firstTable->GetCount())
 		{
 			console.SetUnderscore(true);
